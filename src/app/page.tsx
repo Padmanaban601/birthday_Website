@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { LucideChevronDown, LucideArrowRight, LucideSparkles } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { LucideArrowRight, LucideSparkles } from 'lucide-react';
 import Section from '@/components/Section';
 import Link from 'next/link';
-import Image from 'next/image';
 import Countdown from '@/components/Countdown';
 import Scanner from '@/components/Scanner';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
@@ -66,7 +64,7 @@ export default function Home() {
                 </div>
 
                 <p className="text-xl md:text-2xl text-foreground/40 font-light max-w-xl mx-auto leading-relaxed italic">
-                  "I wanted to give you something sweet. <br />Why don't you bake your own birthday cake?"
+                  &quot;I wanted to give you something sweet. <br />Why don&apos;t you bake your own birthday cake?&quot;
                 </p>
 
                 <button
@@ -105,7 +103,7 @@ export default function Home() {
                     <span className="text-accent-gradient not-italic">better."</span>
                   </h2>
                   <p className="text-2xl md:text-3xl text-foreground/40 font-light leading-relaxed max-w-xl italic">
-                    "I hope that cake was as sweet as your smile. Wishing you the happiest of days."
+                    &quot;I hope that cake was as sweet as your smile. Wishing you the happiest of days.&quot;
                   </p>
                   <div className="pt-8">
                     <button 
@@ -149,10 +147,10 @@ export default function Home() {
              transition={{ duration: 1.5 }}
              className="relative"
           >
-            <span className="text-[12rem] font-serif absolute -top-40 -left-20 text-white/[0.03] pointer-events-none select-none">"</span>
+            <span className="text-[12rem] font-serif absolute -top-40 -left-20 text-white/[0.03] pointer-events-none select-none">&quot;</span>
             <h2 className="text-5xl md:text-8xl font-serif italic text-foreground leading-tight mb-16 text-center lg:text-left relative">
-              "The world feels <br />
-              <span className="lg:ml-40 text-accent-primary drop-shadow-[0_0_15px_rgba(255,175,189,0.4)]">kinder when you smile."</span>
+              &quot;The world feels <br />
+              <span className="lg:ml-40 text-accent-primary drop-shadow-[0_0_15px_rgba(255,175,189,0.4)]">kinder when you smile.&quot;</span>
               <motion.div 
                 animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
                 transition={{ duration: 3, repeat: Infinity }}
@@ -196,7 +194,7 @@ export default function Home() {
             <span className="text-[10px] tracking-[0.8em] uppercase text-accent-secondary block font-bold mb-8">Interaction</span>
             <h2 className="text-5xl md:text-8xl font-serif italic mb-8">A Quiet <br /><span className="text-accent-gradient not-italic">Conversation.</span></h2>
             <p className="text-foreground/20 text-xl font-light tracking-wide italic max-w-lg mx-auto leading-relaxed">
-              "Honest answers are the only ones that truly matter. There are no wrong ones here."
+              &quot;Honest answers are the only ones that truly matter. There are no wrong ones here.&quot;
             </p>
           </div>
           <QuestionBox />

@@ -26,8 +26,8 @@ export default function FinalPage() {
         >
           <span className="text-[10px] tracking-[1em] uppercase text-accent-tertiary font-bold mb-12 block">The End</span>
           <h1 className="text-5xl md:text-8xl font-serif italic mb-12 tracking-tighter leading-tight">
-            "A simple wish <br />
-            <span className="text-accent-gradient not-italic font-normal">for you."</span>
+            &quot;A simple wish <br />
+            <span className="text-accent-gradient not-italic font-normal">for you.&quot;</span>
           </h1>
           
           <p className="text-xl md:text-3xl text-foreground/40 font-light max-w-3xl mx-auto leading-relaxed italic">

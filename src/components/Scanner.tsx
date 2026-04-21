@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
-import { motion, useAnimation, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { LucideSearch, LucideHeart, LucideCheckCircle } from 'lucide-react';
 
 const Scanner = () => {
@@ -113,7 +113,7 @@ const Scanner = () => {
             className="text-center"
           >
             <p className="text-foreground/80 italic font-playfair text-lg mb-6 leading-relaxed">
-              "The stars confirm: You possess a light that makes the world remarkably brighter."
+              &quot;The stars confirm: You possess a light that makes the world remarkably brighter.&quot;
             </p>
             <button 
               onClick={() => { setScanComplete(false); setProgress(0); }}

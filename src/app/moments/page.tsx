@@ -41,7 +41,7 @@ export default function MomentsPage() {
             <span className="italic text-accent-gradient">Notes</span>
           </h1>
           <p className="text-xl md:text-2xl text-foreground/40 font-light max-w-xl leading-relaxed italic">
-            "Even if we only talk on screen, I can tell you are a special person. Happy to know you."
+            &quot;Even if we only talk on screen, I can tell you are a special person. Happy to know you.&quot;
           </p>
         </motion.div>
       </div>
@@ -62,7 +62,7 @@ export default function MomentsPage() {
               </div>
               <h2 className="text-3xl font-serif mb-4 italic">{item.title}</h2>
               <p className="text-xl text-foreground/50 font-light leading-relaxed italic">
-                "{item.text}"
+                &quot;{item.text}&quot;
               </p>
             </div>
           </motion.div>

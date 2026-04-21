@@ -121,7 +121,7 @@ const QuestionBox = () => {
             <div className="space-y-4">
               <h3 className="text-5xl md:text-6xl font-playfair italic relative z-10 text-accent-gradient">Yay! My Heart is Full!</h3>
               <p className="text-foreground/60 text-xl font-light leading-relaxed max-w-sm mx-auto relative z-10 italic">
-                "Small pixels, when put together with love, can hold a lot of warmth. Thank you for smiling."
+                &quot;Small pixels, when put together with love, can hold a lot of warmth. Thank you for smiling.&quot;
               </p>
             </div>
             <motion.button
