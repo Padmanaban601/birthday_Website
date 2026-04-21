@@ -209,9 +209,9 @@ export default function Home() {
           className="absolute w-[1000px] h-[1000px] bg-accent-secondary/5 blur-[200px] rounded-full opacity-30" 
         />
         
-        <Link href="/moments" className="group relative px-16 py-12 text-center">
+        <Link href="/thoughts" className="group relative px-16 py-12 text-center">
           <h3 className="text-4xl md:text-6xl font-serif italic mb-8 group-hover:text-accent-primary transition-colors duration-700 leading-tight">
-            A Few <br />Notes
+            Nice <br />Things
           </h3>
           <div className="flex items-center justify-center gap-4 opacity-40 group-hover:opacity-100 transition-all group-hover:translate-x-4">
              <span className="text-sm font-bold uppercase tracking-[0.4em]">Read More</span>
