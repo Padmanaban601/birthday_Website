@@ -1,113 +1,234 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { LucideChevronDown, LucideSparkles } from 'lucide-react';
+import { LucideChevronDown, LucideArrowRight, LucideSparkles } from 'lucide-react';
 import Section from '@/components/Section';
 import Link from 'next/link';
 import Image from 'next/image';
+import Countdown from '@/components/Countdown';
+import Scanner from '@/components/Scanner';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import QuestionBox from '@/components/QuestionBox';
+import CakeMaker from '@/components/CakeMaker';
 
 export default function Home() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const [showCakeMaker, setShowCakeMaker] = useState(false);
+  const [isCakeFinished, setIsCakeFinished] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
 
-  useEffect(() => {
-    const tl = gsap.timeline();
-    
-    tl.to(heroRef.current, { opacity: 1, duration: 1.5, ease: "power2.inOut" })
-      .from(titleRef.current, { 
-        y: 100, 
-        opacity: 0, 
-        duration: 1.2, 
-        ease: "power4.out" 
-      }, "-=0.5")
-      .from(subtitleRef.current, { 
-        y: 20, 
-        opacity: 0, 
-        duration: 1, 
-        ease: "power3.out" 
-      }, "-=0.8");
-  }, []);
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 1.1]);
+  const y = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
 
   return (
-    <div className="relative min-h-screen">
-      {/* Hero Section */}
-      <section 
-        ref={heroRef}
-        className="relative h-screen flex flex-col items-center justify-center text-center opacity-0 overflow-hidden"
-      >
-        {/* Background Visual */}
-        <div className="absolute inset-0 -z-10 bg-black">
-          <Image 
-            src="https://images.unsplash.com/photo-1532767153582-b1a0e5145009?q=80&w=1887&auto=format&fit=crop"
-            alt="Hero Background"
-            fill
-            className="object-cover opacity-40 blur-[2px]"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background" />
-        </div>
-        
-        <div className="relative z-10 px-6">
-          <div className="flex items-center justify-center gap-2 mb-6 animate-float">
-            <LucideSparkles className="w-5 h-5 text-primary-lavender" />
-            <span className="text-sm tracking-widest uppercase text-foreground/60">A Special Celebration</span>
-          </div>
-          
-          <h1 
-            ref={titleRef}
-            className="text-6xl md:text-8xl font-playfair font-medium mb-8 leading-tight tracking-tight"
-          >
-            A Quiet Wish <br />
-            <span className="text-gradient italic font-normal">For You</span>
-          </h1>
-          
-          <p 
-            ref={subtitleRef}
-            className="text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto mb-12 font-light leading-relaxed font-outfit"
-          >
-            "A quiet wish for someone special. No expectations, only happiness for you."
-          </p>
+    <div ref={containerRef} className="relative bg-[#020205] text-foreground min-h-screen">
+      {/* Hero & Interaction Section */}
+      <section className="relative h-[120svh] flex items-center justify-center overflow-hidden">
+        <motion.div 
+          style={{ opacity, scale, y }}
+          className="absolute inset-0 z-0"
+        >
+          {/* Ambient Background Glows */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,_rgba(255,175,189,0.1)_0%,_transparent_50%)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#030305]/20 to-[#030305]" />
+          <div className="absolute top-1/4 -right-1/4 w-[800px] h-[800px] bg-accent-primary/10 blur-[180px] rounded-full animate-aurora opacity-30 mix-blend-screen" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-[800px] h-[800px] bg-accent-secondary/10 blur-[180px] rounded-full animate-aurora opacity-20 mix-blend-screen" style={{ animationDirection: 'reverse', animationDuration: '25s' }} />
+        </motion.div>
 
-          <Link href="/wishes">
-            <button className="group relative px-8 py-4 bg-transparent text-foreground border border-glass-border rounded-full overflow-hidden transition-all hover:border-primary-lavender/50">
-              <div className="absolute inset-0 bg-primary-lavender/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-              <span className="relative font-medium tracking-wide">Step Inside</span>
-            </button>
-          </Link>
-        </div>
+        <div className="container mx-auto px-8 relative z-10">
+          <AnimatePresence mode="wait">
+            {!showCakeMaker && !isCakeFinished ? (
+              <motion.div
+                key="welcome"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, filter: 'blur(20px)' }}
+                transition={{ duration: 1.2 }}
+                className="max-w-4xl mx-auto text-center space-y-12"
+              >
+                <div className="space-y-6">
+                  <motion.span 
+                    initial={{ letterSpacing: "1.5em", opacity: 0 }}
+                    animate={{ letterSpacing: "0.8em", opacity: 1 }}
+                    className="text-[10px] md:text-xs uppercase text-accent-secondary block font-black"
+                  >
+                    Est. 2026 • Chapter I
+                  </motion.span>
+                  <h1 className="text-7xl md:text-[10rem] font-serif leading-[0.8] tracking-tighter italic">
+                    Sweet <br />
+                    <span className="text-accent-gradient not-italic">Surprise.</span>
+                  </h1>
+                </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
-          <LucideChevronDown className="w-6 h-6" />
+                <p className="text-xl md:text-2xl text-foreground/40 font-light max-w-xl mx-auto leading-relaxed italic">
+                  "I wanted to give you something sweet. <br />Why don't you bake your own birthday cake?"
+                </p>
+
+                <button
+                  onClick={() => setShowCakeMaker(true)}
+                  className="group relative px-12 py-6 glass rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                >
+                  <span className="relative z-10 text-xs font-bold tracking-[0.4em] uppercase text-white/80 group-hover:text-white transition-colors">Start Baking</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-accent-primary/20 to-accent-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </button>
+              </motion.div>
+            ) : showCakeMaker && !isCakeFinished ? (
+              <motion.div
+                key="cakemaker"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, y: -50, filter: 'blur(20px)' }}
+                className="flex justify-center"
+              >
+                <CakeMaker onComplete={() => {
+                  setShowCakeMaker(false);
+                  setIsCakeFinished(true);
+                }} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="final-reveal"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
+                className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-16"
+              >
+                <div className="flex-1 space-y-12 text-center lg:text-left">
+                  <span className="text-[10px] tracking-[0.8em] uppercase text-accent-tertiary block font-bold">The Reveal</span>
+                  <h2 className="text-6xl md:text-[8rem] font-serif italic text-foreground leading-[0.9] tracking-tighter">
+                    "The world feels <br />
+                    <span className="text-accent-gradient not-italic">better."</span>
+                  </h2>
+                  <p className="text-2xl md:text-3xl text-foreground/40 font-light leading-relaxed max-w-xl italic">
+                    "I hope that cake was as sweet as your smile. Wishing you the happiest of days."
+                  </p>
+                  <div className="pt-8">
+                    <button 
+                      onClick={() => document.getElementById('soul-check')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="group flex items-center gap-6 text-foreground/40 hover:text-foreground transition-all uppercase tracking-[0.4em] text-[10px] font-bold"
+                    >
+                      Continue Reading <LucideArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+                
+                <motion.div
+                  animate={{ y: [0, -20, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative hidden lg:block"
+                >
+                  <div className="w-64 h-64 md:w-96 md:h-96 rounded-full bg-accent-primary/10 blur-[100px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                  <LucideSparkles className="w-32 h-32 md:w-48 md:h-48 text-accent-secondary opacity-20" />
+                </motion.div>
+              </motion.div>
+            ) }
+          </AnimatePresence>
         </div>
       </section>
 
-      {/* Intro Quote Section */}
-      <Section className="text-center">
-        <h2 className="text-3xl md:text-4xl font-playfair italic text-foreground/90 mb-6">
-          "The stars shine a little brighter today..."
-        </h2>
-        <p className="text-lg text-foreground/60 max-w-xl mx-auto leading-relaxed">
-          In the quiet moments of life, some people leave an indelible mark. This is a small celebration of the person you are, without any noise, just pure appreciation.
-        </p>
+      {/* Countdown Area */}
+      <section className="py-32 relative flex justify-center">
+        <div className="absolute inset-0 bg-accent-primary/5 blur-[120px] opacity-20 pointer-events-none" />
+        <div className="glass px-12 py-16 rounded-[3rem] text-center max-w-4xl w-full mx-8">
+           <p className="text-[10px] uppercase tracking-[0.5em] text-foreground/30 mb-8 font-bold">Waiting for June 1st</p>
+           <Countdown targetDate="2026-06-01T00:00:00" />
+        </div>
+      </section>
+
+      {/* Quote Section */}
+      <Section className="py-64 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto px-8">
+          <motion.div
+             initial={{ opacity: 0 }}
+             whileInView={{ opacity: 1 }}
+             transition={{ duration: 1.5 }}
+             className="relative"
+          >
+            <span className="text-[12rem] font-serif absolute -top-40 -left-20 text-white/[0.03] pointer-events-none select-none">"</span>
+            <h2 className="text-5xl md:text-8xl font-serif italic text-foreground leading-tight mb-16 text-center lg:text-left relative">
+              "The world feels <br />
+              <span className="lg:ml-40 text-accent-primary drop-shadow-[0_0_15px_rgba(255,175,189,0.4)]">kinder when you smile."</span>
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 3, repeat: Infinity }}
+                className="absolute top-0 right-0 md:right-40"
+              >
+                <LucideSparkles className="w-12 h-12 text-accent-tertiary" />
+              </motion.div>
+            </h2>
+            <div className="flex justify-end mt-12">
+               <p className="text-xl text-foreground/40 max-w-lg leading-relaxed font-light italic text-right">
+                This is for you, because you make everything better just by being yourself. No pressure, just a simple thank you.
+              </p>
+            </div>
+          </motion.div>
+        </div>
       </Section>
 
-      {/* Aesthetic Spacer */}
-      <div className="h-64 bg-[radial-gradient(ellipse_at_center,_rgba(177,156,217,0.05)_0%,_transparent_70%)]" />
+      {/* Mood Check Section */}
+      <section id="soul-check" className="py-48 px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="lg:col-span-5 flex flex-col justify-center">
+             <span className="text-[10px] uppercase tracking-[0.5em] text-accent-tertiary mb-6 font-bold">Your Mood</span>
+            <h2 className="text-5xl md:text-7xl font-serif mb-8 tracking-tighter leading-none">How are you <br />feeling?</h2>
+            <p className="text-foreground/40 text-xl font-light italic mb-12 max-w-md">
+              Let's see if you're having a good day today.
+            </p>
+          </div>
+          <div className="lg:col-span-7">
+            <div className="glass p-12 rounded-[4rem] flex justify-center items-center relative overflow-hidden group">
+              <div className="absolute inset-0 bg-accent-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <Scanner />
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* Direct Invite to Memories */}
-      <Section className="flex flex-col items-center">
-        <div className="w-px h-24 bg-gradient-to-b from-transparent via-primary-lavender/30 to-transparent mb-12" />
-        <Link href="/memories" className="group text-2xl font-playfair hover:text-primary-lavender transition-colors">
-          Explore Symbolic Memories →
+      {/* Question Section */}
+      <section id="happiness-check" className="py-48 px-8 bg-[#050508]">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="mb-24">
+            <span className="text-[10px] tracking-[0.8em] uppercase text-accent-secondary block font-bold mb-8">Interaction</span>
+            <h2 className="text-5xl md:text-8xl font-serif italic mb-8">A Quiet <br /><span className="text-accent-gradient not-italic">Conversation.</span></h2>
+            <p className="text-foreground/20 text-xl font-light tracking-wide italic max-w-lg mx-auto leading-relaxed">
+              "Honest answers are the only ones that truly matter. There are no wrong ones here."
+            </p>
+          </div>
+          <QuestionBox />
+        </div>
+      </section>
+
+      {/* Next Section Link */}
+      <section className="py-80 relative flex flex-col items-center justify-center overflow-hidden">
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1] }} 
+          transition={{ duration: 20, repeat: Infinity }}
+          className="absolute w-[1000px] h-[1000px] bg-accent-secondary/5 blur-[200px] rounded-full opacity-30" 
+        />
+        
+        <Link href="/moments" className="group relative px-16 py-12 text-center">
+          <h3 className="text-4xl md:text-6xl font-serif italic mb-8 group-hover:text-accent-primary transition-colors duration-700 leading-tight">
+            A Few <br />Notes
+          </h3>
+          <div className="flex items-center justify-center gap-4 opacity-40 group-hover:opacity-100 transition-all group-hover:translate-x-4">
+             <span className="text-sm font-bold uppercase tracking-[0.4em]">Read More</span>
+             <LucideArrowRight className="w-6 h-6" />
+          </div>
         </Link>
-      </Section>
+      </section>
 
-      <footer className="py-12 border-t border-glass-border/50 text-center text-sm text-foreground/40">
-        <p>© 2026 Crafted with care • No expectations</p>
+      <footer className="py-24 border-t border-white/5 text-center relative bg-background">
+        <p className="text-[9px] uppercase tracking-[0.8em] text-foreground/20 mb-6 font-bold">Made for You • 2026</p>
+        <p className="text-[10px] text-foreground/10 tracking-[0.2em]">BE HAPPY. NO PRESSURE.</p>
       </footer>
+
+      {/* Texture */}
+      <div className="noise" />
     </div>
   );
 }

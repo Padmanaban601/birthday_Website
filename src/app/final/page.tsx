@@ -2,84 +2,99 @@
 
 import React, { useState } from 'react';
 import Section from '@/components/Section';
-import { motion } from 'framer-motion';
-import { LucideHeart } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { LucideHeart, LucideArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 export default function FinalPage() {
   const [clicked, setClicked] = useState(false);
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(177,156,217,0.1)_0%,_transparent_50%)]" />
+    <div className="h-screen flex flex-col items-center justify-center relative overflow-hidden bg-background mesh-gradient">
+      {/* Background Glows */}
+      <div className="absolute inset-0 z-0 text-white">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-primary/10 blur-[200px] rounded-full animate-aurora mix-blend-screen opacity-40" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-secondary/10 blur-[180px] rounded-full animate-aurora mix-blend-screen opacity-30" style={{ animationDirection: 'reverse' }} />
+      </div>
 
-      <Section className="text-center relative z-10">
+      <div className="relative z-10 text-center max-w-5xl px-8">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="space-y-8"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.5, ease: "circOut" }}
+          className="space-y-12"
         >
-          <h1 className="text-4xl md:text-6xl font-playfair italic mb-8">
-            "A quiet wish for someone special..."
+          <span className="text-[10px] tracking-[1em] uppercase text-accent-tertiary font-bold mb-12 block">The End</span>
+          <h1 className="text-5xl md:text-8xl font-serif italic mb-12 tracking-tighter leading-tight">
+            "A simple wish <br />
+            <span className="text-accent-gradient not-italic font-normal">for you."</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-foreground/60 font-light max-w-2xl mx-auto leading-relaxed">
-            As this little digital journey ends, my message remains the same. 
-            May you find all the happiness you deserve, and may your path always be lit 
-            by the same light you bring into the world.
+          <p className="text-xl md:text-3xl text-foreground/40 font-light max-w-3xl mx-auto leading-relaxed italic">
+            I hope you stay happy forever. You deserve the best in life, 
+            and I am glad I could share this with you today.
           </p>
 
-          <div className="py-12">
+          <div className="py-16">
             <button 
               onClick={() => setClicked(true)}
-              className="group relative inline-flex flex-col items-center gap-4 transition-all"
+              className="group relative flex flex-col items-center gap-6"
             >
               <div className={`
-                p-8 rounded-full border border-glass-border transition-all duration-700
-                ${clicked ? 'bg-primary-lavender bg-opacity-20 scale-125 border-primary-lavender shadow-[0_0_30px_rgba(177,156,217,0.4)]' : 'hover:border-primary-lavender/40 hover:scale-110'}
+                w-24 h-24 rounded-full flex items-center justify-center border transition-all duration-1000
+                ${clicked ? 'bg-accent-secondary/20 border-accent-secondary scale-125 shadow-[0_0_60px_rgba(255,105,180,0.3)]' : 'border-white/10 hover:border-accent-secondary/40 hover:scale-110'}
               `}>
                 <LucideHeart 
-                  className={`w-12 h-12 transition-all duration-700 ${clicked ? 'fill-primary-lavender text-primary-lavender' : 'text-foreground/40 group-hover:text-primary-lavender/60'}`} 
+                  className={`w-10 h-10 transition-all duration-1000 ${clicked ? 'fill-accent-secondary text-accent-secondary animate-pulse' : 'text-foreground/20 group-hover:text-accent-secondary/60'}`} 
                 />
               </div>
-              <span className={`text-sm tracking-widest uppercase transition-opacity duration-700 ${clicked ? 'opacity-100' : 'opacity-40 group-hover:opacity-60'}`}>
-                {clicked ? 'Happiness to you' : 'Send a Quiet Wish'}
+              <span className={`text-[10px] font-bold tracking-[0.5em] uppercase transition-all duration-1000 ${clicked ? 'text-accent-secondary opacity-100 translate-y-2' : 'text-foreground/30 opacity-40'}`}>
+                {clicked ? 'Sent! • ♡' : 'Send a Wish'}
               </span>
             </button>
           </div>
 
-          <div className="pt-8">
-             <Link href="/" className="text-foreground/30 hover:text-foreground/60 transition-colors text-sm font-light tracking-wide">
-                ← Return to the beginning
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2 }}
+            className="pt-12"
+          >
+             <Link href="/" className="group inline-flex items-center gap-4 text-foreground/20 hover:text-foreground/60 transition-all text-[10px] font-bold tracking-[0.4em] uppercase">
+                <LucideArrowLeft className="w-4 h-4 group-hover:-translate-x-2 transition-transform" />
+                Go Back
              </Link>
-          </div>
+          </motion.div>
         </motion.div>
-      </Section>
+      </div>
 
-      {/* Floating Particles for the end */}
-      {clicked && (
-        <div className="absolute inset-0 pointer-events-none">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 0, x: 0 }}
-              animate={{ 
-                opacity: [0, 1, 0], 
-                y: -500,
-                x: (Math.random() - 0.5) * 400
-              }}
-              transition={{ 
-                duration: 4 + Math.random() * 4, 
-                repeat: Infinity,
-                delay: Math.random() * 2
-              }}
-              className="absolute left-1/2 bottom-0 w-1 h-1 bg-primary-lavender rounded-full blur-[1px]"
-            />
-          ))}
-        </div>
-      )}
+      {/* Floating Particles */}
+      <AnimatePresence>
+        {clicked && (
+          <div className="absolute inset-0 pointer-events-none z-20">
+            {[...Array(40)].map((_, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 0, x: 0 }}
+                animate={{ 
+                  opacity: [0, 1, 0], 
+                  y: -800,
+                  x: (Math.random() - 0.5) * 600
+                }}
+                exit={{ opacity: 0 }}
+                transition={{ 
+                  duration: 5 + Math.random() * 5, 
+                  repeat: Infinity,
+                  delay: Math.random() * 3
+                }}
+                className={`absolute left-1/2 bottom-0 w-1 h-1 rounded-full blur-[2px] ${i % 2 === 0 ? 'bg-accent-primary' : 'bg-accent-secondary'}`}
+              />
+            ))}
+          </div>
+        )}
+      </AnimatePresence>
+
+      <div className="noise" />
     </div>
   );
 }

@@ -2,68 +2,111 @@
 
 import React from 'react';
 import Section from '@/components/Section';
-import { LucideQuote, LucideHeart } from 'lucide-react';
+import { LucideQuote, LucideHeart, LucideSparkles, LucideArrowRight } from 'lucide-react';
+import Balloons from '@/components/Balloons';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const wishes = [
   {
-    title: "Happiness",
-    message: "May your day be filled with the kind of joy that stays with you, long after the stars come out.",
-    icon: <LucideQuote className="w-8 h-8 text-primary-lavender/40" />
+    title: "Always Happy",
+    message: "I hope you have a great day that makes you smile all the time. You deserve to be happy.",
+    icon: <LucideQuote className="w-8 h-8 text-accent-primary/40" />,
+    align: "left"
   },
   {
-    title: "Peace",
-    message: "I wish for you a path that is gentle, and a heart that feels light, today and every day.",
-    icon: <LucideHeart className="w-8 h-8 text-soft-pink/40" />
+    title: "Be Calm",
+    message: "I wish for you a simple life and a happy heart. Just like a quiet night.",
+    icon: <LucideHeart className="w-8 h-8 text-accent-secondary/40" />,
+    align: "right"
   },
   {
-    title: "Growth",
-    message: "Watching you become who you are is a gift. May you continue to bloom in your own beautiful time.",
-    icon: <LucideSparkles className="w-8 h-8 text-moonlight/40" />
-  },
-  {
-    title: "The Quiet Wish",
-    message: "No expectations, no noise—just a quiet hope that you are exactly where you want to be.",
-    social: "— A quiet wish"
+    title: "Keep Growing",
+    message: "You are growing into an amazing person. Keep being yourself and following your dreams.",
+    icon: <LucideSparkles className="w-8 h-8 text-accent-tertiary/40" />,
+    align: "left"
   }
 ];
 
-import { LucideSparkles } from 'lucide-react';
 
 export default function WishesPage() {
   return (
-    <div className="pt-32 pb-24">
-      <div className="max-w-3xl mx-auto px-6 mb-20 text-center">
-        <h1 className="text-5xl font-playfair mb-6">Heartfelt Wishes</h1>
-        <p className="text-foreground/60 font-light">Words that I carry quietly, shared just for today.</p>
+    <div className="pt-48 pb-32 relative overflow-hidden bg-background">
+      <Balloons />
+      
+      {/* Decorative Aura */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent-primary/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent-secondary/5 blur-[150px] rounded-full pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-8 mb-40">
+        <motion.div
+           initial={{ opacity: 0, y: 30 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 1 }}
+           className="relative"
+        >
+          <span className="text-[10px] tracking-[0.8em] uppercase text-accent-secondary mb-8 block font-bold">Part II</span>
+          <h1 className="text-7xl md:text-[8rem] font-serif leading-none tracking-tighter mb-12">
+            Good <br />
+            <span className="italic font-normal text-accent-gradient">Wishes</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-foreground/40 font-light max-w-xl leading-relaxed italic">
+            "Simple words coming from my heart to yours. I hope they make you smile."
+          </p>
+        </motion.div>
       </div>
 
-      <div className="space-y-12">
+      <div className="space-y-40 max-w-7xl mx-auto px-8">
         {wishes.map((wish, index) => (
-          <Section key={index} className="flex justify-center">
-            <div className="glass p-12 rounded-[2rem] w-full max-w-2xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-opacity">
+          <motion.div 
+            key={index}
+            initial={{ opacity: 0, x: wish.align === 'left' ? -50 : 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1, ease: "circOut" }}
+            className={`flex flex-col ${wish.align === 'left' ? 'items-start text-left' : 'items-end text-right'}`}
+          >
+            <div className="glass p-16 md:p-24 rounded-[4rem] w-full max-w-4xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-700">
+              <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:opacity-100 transition-opacity duration-700">
                 {wish.icon}
               </div>
               
-              <h2 className="text-2xl font-playfair mb-4 text-primary-lavender">{wish.title}</h2>
-              <p className="text-xl text-foreground/80 leading-relaxed font-light italic">
+              <span className="text-[10px] uppercase tracking-[0.5em] text-accent-primary mb-10 block font-bold">Wish • 0{index + 1}</span>
+              <h2 className="text-4xl md:text-6xl font-serif mb-12">{wish.title}</h2>
+              <p className="text-2xl md:text-4xl text-foreground/80 leading-snug font-light italic">
                 "{wish.message}"
               </p>
               
-              {wish.social && (
-                <p className="mt-8 text-sm tracking-widest uppercase text-foreground/40">{wish.social}</p>
-              )}
+              <div className="mt-16 w-32 h-px bg-white/10 group-hover:w-full transition-all duration-1000" />
             </div>
-          </Section>
+          </motion.div>
         ))}
       </div>
 
-      <Section className="text-center mt-20">
-        <div className="w-16 h-1 bg-gradient-to-r from-transparent via-primary-lavender/30 to-transparent mx-auto mb-8" />
-        <p className="text-foreground/40 italic font-light max-w-sm mx-auto">
-          "Sometimes the most sincere wishes are the ones that don't need an answer."
-        </p>
-      </Section>
+      <section className="mt-64 text-center px-8">
+        <div className="max-w-2xl mx-auto">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            className="p-16 glass rounded-[3rem] relative"
+          >
+             <LucideHeart className="w-12 h-12 text-accent-secondary/30 mx-auto mb-10 animate-pulse" />
+             <h3 className="text-3xl font-serif italic mb-8">"Keep being you."</h3>
+             <p className="text-foreground/40 font-light italic leading-relaxed">
+              I wish the best for you today and always. You are a special person.
+            </p>
+          </motion.div>
+          
+          <div className="mt-24">
+            <Link href="/thoughts" className="group inline-flex items-center gap-6">
+              <span className="text-xs font-bold uppercase tracking-[0.4em] text-foreground/40 group-hover:text-foreground transition-colors">Next</span>
+              <LucideArrowRight className="w-5 h-5 text-accent-primary group-hover:translate-x-3 transition-transform" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <div className="noise" />
     </div>
   );
 }

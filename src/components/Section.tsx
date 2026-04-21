@@ -7,9 +7,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 interface SectionProps {
   children: React.ReactNode;
   className?: string;
+  id?: string;
 }
 
-const Section = ({ children, className = "" }: SectionProps) => {
+const Section = ({ children, className = "", id }: SectionProps) => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const Section = ({ children, className = "" }: SectionProps) => {
   }, []);
 
   return (
-    <section ref={sectionRef} className={`w-full py-24 px-6 ${className}`}>
+    <section ref={sectionRef} id={id} className={`w-full py-24 px-6 ${className}`}>
       <div className="max-w-5xl mx-auto">
         {children}
       </div>
