@@ -43,7 +43,7 @@ export default function ThoughtsPage() {
             <span className="italic text-accent-gradient">Things</span>
           </h1>
           <p className="text-xl md:text-2xl text-foreground/40 font-light leading-relaxed max-w-xl">
-            "Thinking about why you are a great person and why I appreciate our digital connection."
+            &quot;Thinking about why you are a great person and why I appreciate our digital connection.&quot;
           </p>
         </motion.div>
       </div>
@@ -65,7 +65,7 @@ export default function ThoughtsPage() {
                
                <h2 className="text-3xl md:text-4xl font-serif mb-6 italic">{thought.title}</h2>
                <p className="text-2xl text-foreground/70 font-light leading-relaxed italic">
-                 "{thought.content}"
+                 &quot;{thought.content}&quot;
                </p>
             </div>
           </motion.div>
