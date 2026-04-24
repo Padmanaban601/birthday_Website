@@ -13,6 +13,7 @@ import {
   LucideShieldAlert,
   LucideGhost
 } from 'lucide-react';
+import { trackMilestone } from '@/lib/analytics';
 
 interface PasscodeLockProps {
   onSuccess: () => void;
@@ -68,6 +69,8 @@ export default function PasscodeLock({ onSuccess }: PasscodeLockProps) {
   const [passcode, setPasscode] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [showGiftAccept, setShowGiftAccept] = useState(false);
+  const [showNoReaction, setShowNoReaction] = useState(false);
+  const [noLevel, setNoLevel] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
 
   const handleNumberClick = (num: string) => {
@@ -84,6 +87,7 @@ export default function PasscodeLock({ onSuccess }: PasscodeLockProps) {
   useEffect(() => {
     if (passcode.length === 4) {
       if (passcode === CORRECT_PASSCODE) {
+        trackMilestone("Passcode Unlocked", { attempts: wrongCount + 1 });
         setTimeout(() => setShowGiftAccept(true), 0);
       } else {
         const timer = setTimeout(() => {
@@ -103,49 +107,120 @@ export default function PasscodeLock({ onSuccess }: PasscodeLockProps) {
         animate={{ opacity: 1 }}
         className="fixed inset-0 z-[100] bg-[#FFDEE9] flex flex-col items-center justify-center p-8"
       >
-        <motion.div 
-            initial={{ scale: 0.9, y: 20 }}
-            animate={{ scale: 1, y: 0 }}
-            className="max-w-md w-full bg-white rounded-[3rem] p-12 shadow-2xl text-center space-y-8 border-8 border-[#FF8E9E]/20"
-        >
+        <AnimatePresence mode="wait">
+          {!showNoReaction ? (
             <motion.div 
-                animate={{ 
-                    y: [0, -20, 0],
-                    rotate: [0, -5, 5, 0]
-                }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="relative w-48 h-48 mx-auto flex items-center justify-center bg-gradient-to-br from-pink-100 to-pink-200 rounded-[3rem] shadow-lg border-4 border-white"
+                key="accept-modal"
+                initial={{ scale: 0.9, y: 20, opacity: 0 }}
+                animate={{ scale: 1, y: 0, opacity: 1 }}
+                exit={{ scale: 1.1, opacity: 0, filter: 'blur(10px)' }}
+                className="max-w-md w-full bg-white rounded-[3rem] p-12 shadow-2xl text-center space-y-8 border-8 border-[#FF8E9E]/20"
             >
-                <LucideGift className="w-24 h-24 text-[#FF4D6D] drop-shadow-lg" />
-                <div className="absolute inset-0 bg-white/30 blur-2xl rounded-full scale-50 animate-pulse" />
-            </motion.div>
-            
-            <div className="space-y-4">
-                <h2 className="text-3xl font-black text-[#FF4D6D] uppercase tracking-tight">Pls Accept the Gift</h2>
-                <p className="text-[#FF8E9E] font-bold italic leading-relaxed">
-                    &quot;I spent a lot of time on this <br />just for you...&quot;
-                </p>
-            </div>
-            
-            <div className="flex gap-4">
-                <button 
-                    onClick={onSuccess}
-                    className="flex-1 py-4 bg-[#FF4D6D] text-white rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-[#FF4D6D]/40 active:scale-95"
-                >
-                    Yes
-                </button>
-                <button 
-                    onClick={() => {
-                        setWrongCount(prev => prev + 1);
-                        setShowGiftAccept(false);
-                        setPasscode("");
+                <motion.div 
+                    animate={{ 
+                        y: [0, -20, 0],
+                        rotate: [0, -5, 5, 0]
                     }}
-                    className="flex-1 py-4 bg-[#FFE5E9] text-[#FF4D6D] rounded-2xl font-black uppercase tracking-widest hover:bg-white hover:border-[#FF4D6D] border-2 border-transparent transition-all active:scale-95"
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="relative w-48 h-48 mx-auto flex items-center justify-center bg-gradient-to-br from-pink-100 to-pink-200 rounded-[3rem] shadow-lg border-4 border-white"
                 >
-                    No
-                </button>
-            </div>
-        </motion.div>
+                    <LucideGift className="w-24 h-24 text-[#FF4D6D] drop-shadow-lg" />
+                    <div className="absolute inset-0 bg-white/30 blur-2xl rounded-full scale-50 animate-pulse" />
+                </motion.div>
+                
+                <div className="space-y-4">
+                    <h2 className="text-3xl font-black text-[#FF4D6D] uppercase tracking-tight">Ready for your gift?</h2>
+                    <p className="text-[#FF8E9E] font-bold italic leading-relaxed">
+                        &quot;Everything inside was made <br />specifically for you...&quot;
+                    </p>
+                </div>
+                
+                <div className="flex gap-4">
+                    <button 
+                        onClick={onSuccess}
+                        className="flex-1 py-4 bg-[#FF4D6D] text-white rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-[#FF4D6D]/40 active:scale-95"
+                    >
+                        Yes
+                    </button>
+                    <button 
+                        onClick={() => {
+                          setShowNoReaction(true);
+                          setNoLevel(1);
+                        }}
+                        className="flex-1 py-4 bg-[#FFE5E9] text-[#FF4D6D] rounded-2xl font-black uppercase tracking-widest hover:bg-white hover:border-[#FF4D6D] border-2 border-transparent transition-all active:scale-95"
+                    >
+                        No
+                    </button>
+                </div>
+            </motion.div>
+          ) : (
+            <motion.div 
+                key={`no-modal-${noLevel}`}
+                initial={{ scale: 0.9, y: 20, opacity: 0 }}
+                animate={{ scale: 1, y: 0, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0, rotate: noLevel % 2 === 0 ? 5 : -5 }}
+                className="max-w-md w-full bg-white rounded-[3.5rem] p-12 shadow-2xl text-center space-y-10 border-8 border-gray-100"
+            >
+                <div className="relative group">
+                    <motion.div 
+                        animate={{ 
+                            scale: [1, 1.2, 1],
+                            rotate: [0, 10, -10, 0]
+                        }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                        className="text-8xl"
+                    >
+                        {noLevel === 1 && "🥺"}
+                        {noLevel === 2 && "🧐"}
+                        {noLevel === 3 && "😠"}
+                        {noLevel === 4 && "🐇"}
+                        {noLevel >= 5 && "🔒"}
+                    </motion.div>
+                </div>
+                
+                <div className="space-y-4">
+                    <h2 className="text-3xl font-black text-gray-800 uppercase tracking-tight">
+                        {noLevel === 1 && "Are you sure?"}
+                        {noLevel === 2 && "Wait, really?"}
+                        {noLevel === 3 && "Now you're just testing me!"}
+                        {noLevel === 4 && "A bunny is crying..."}
+                        {noLevel >= 5 && "Access Denied (to No)"}
+                    </h2>
+                    <p className="text-gray-400 font-medium italic leading-relaxed">
+                        {noLevel === 1 && "\"It would make me very sad if you didn't see what's inside...\""}
+                        {noLevel === 2 && "\"I think you accidentally clicked the wrong button. The big pink one is over there!\""}
+                        {noLevel === 3 && "\"My pixels are starting to sweat. Please just click Yes!\""}
+                        {noLevel === 4 && "\"Look what you've done to the poor bunny. Are you heartless?\""}
+                        {noLevel >= 5 && "\"I've disabled the 'No' button logic. It just leads back here now. Resistance is futile!\""}
+                    </p>
+                </div>
+                
+                <div className="flex flex-col gap-4">
+                    <button 
+                        onClick={() => {
+                          setShowNoReaction(false);
+                          setNoLevel(0);
+                        }}
+                        className="w-full py-5 bg-[#FF4D6D] text-white rounded-2xl font-black uppercase tracking-[0.2em] hover:scale-105 transition-transform shadow-xl active:scale-95"
+                    >
+                        Okay, I&apos;ll see it!
+                    </button>
+                    <button 
+                        onClick={() => {
+                          setNoLevel(prev => prev + 1);
+                        }}
+                        className="w-full py-4 text-gray-300 text-[10px] font-black uppercase tracking-[0.4em] hover:text-gray-400 transition-colors"
+                    >
+                        {noLevel === 1 && "Still No..."}
+                        {noLevel === 2 && "I meant what I said."}
+                        {noLevel === 3 && "Try to stop me!"}
+                        {noLevel === 4 && "Sorry bunny..."}
+                        {noLevel >= 5 && "I'm stuck here, aren't I?"}
+                    </button>
+                </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     );
   }

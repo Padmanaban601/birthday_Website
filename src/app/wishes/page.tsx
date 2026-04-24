@@ -38,7 +38,7 @@ export default function WishesPage() {
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent-primary/5 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent-secondary/5 blur-[150px] rounded-full pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-8 mb-40">
+      <div className="max-w-6xl mx-auto px-6 md:px-8 mb-20 md:mb-40">
         <motion.div
            initial={{ opacity: 0, y: 30 }}
            animate={{ opacity: 1, y: 0 }}
@@ -46,17 +46,17 @@ export default function WishesPage() {
            className="relative"
         >
           <span className="text-[10px] tracking-[0.8em] uppercase text-accent-secondary mb-8 block font-bold">Part II</span>
-          <h1 className="text-7xl md:text-[8rem] font-serif leading-none tracking-tighter mb-12">
+          <h1 className="text-6xl md:text-[8rem] font-serif leading-none tracking-tighter mb-12">
             Good <br />
             <span className="italic font-normal text-accent-gradient">Wishes</span>
           </h1>
-          <p className="text-xl md:text-2xl text-foreground/40 font-light max-w-xl leading-relaxed italic">
+          <p className="text-lg md:text-2xl text-foreground/40 font-light max-w-xl leading-relaxed italic">
             &quot;Simple words coming from my heart to yours. I hope they make you smile.&quot;
           </p>
         </motion.div>
       </div>
 
-      <div className="space-y-40 max-w-7xl mx-auto px-8">
+      <div className="space-y-24 md:space-y-40 max-w-7xl mx-auto px-6 md:px-8">
         {wishes.map((wish, index) => (
           <motion.div 
             key={index}
@@ -66,18 +66,18 @@ export default function WishesPage() {
             transition={{ duration: 1, ease: "circOut" }}
             className={`flex flex-col ${wish.align === 'left' ? 'items-start text-left' : 'items-end text-right'}`}
           >
-            <div className="glass p-16 md:p-24 rounded-[4rem] w-full max-w-4xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-700">
-              <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:opacity-100 transition-opacity duration-700">
+            <div className="bg-white/40 backdrop-blur-xl p-10 md:p-24 rounded-[3rem] md:rounded-[4rem] w-full max-w-4xl relative overflow-hidden group hover:bg-white/60 transition-all duration-700 border border-white shadow-xl">
+              <div className="absolute top-0 right-0 p-8 md:p-12 opacity-10 group-hover:opacity-100 transition-opacity duration-700">
                 {wish.icon}
               </div>
               
-              <span className="text-[10px] uppercase tracking-[0.5em] text-accent-primary mb-10 block font-bold">Wish • 0{index + 1}</span>
-              <h2 className="text-4xl md:text-6xl font-serif mb-12">{wish.title}</h2>
-              <p className="text-2xl md:text-4xl text-foreground/80 leading-snug font-light italic">
+              <span className="text-[10px] uppercase tracking-[0.5em] text-accent-primary mb-6 md:mb-10 block font-bold">Wish • 0{index + 1}</span>
+              <h2 className="text-3xl md:text-6xl font-serif mb-6 md:mb-12 text-gray-900">{wish.title}</h2>
+              <p className="text-xl md:text-4xl text-gray-800/80 leading-snug font-light italic">
                 &quot;{wish.message}&quot;
               </p>
               
-              <div className="mt-16 w-32 h-px bg-white/10 group-hover:w-full transition-all duration-1000" />
+              <div className="mt-10 md:mt-16 w-12 md:w-32 h-px bg-accent-primary/20 group-hover:w-full transition-all duration-1000" />
             </div>
           </motion.div>
         ))}

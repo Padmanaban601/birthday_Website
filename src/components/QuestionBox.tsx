@@ -3,6 +3,7 @@
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LucideHeart, LucideSparkles, LucideMoon, LucideGhost } from 'lucide-react';
+import { trackMilestone } from '@/lib/analytics';
 
 interface Question {
   id: number;
@@ -16,34 +17,34 @@ interface Question {
 const QUESTIONS: Question[] = [
   {
     id: 1,
-    text: "Is your heart feeling light today?",
-    subtext: "I hope you've found a moment of peace in the noise of the day.",
-    icon: <LucideHeart className="w-12 h-12 text-pink-400" />,
-    yesLabel: "It is now ✨",
-    noLabel: "Not yet..."
+    text: "Does this digital world feel warm to you?",
+    subtext: "I tried to capture a bit of sunshine in these pixels, just for you.",
+    icon: <LucideHeart className="w-12 h-12 text-[#ff8e9e]" />,
+    yesLabel: "It feels like home ✨",
+    noLabel: "A bit chilly"
   },
   {
     id: 2,
-    text: "Do you believe in digital magic?",
-    subtext: "Small pixels, when put together with love, can hold a lot of warmth.",
-    icon: <LucideSparkles className="w-12 h-12 text-amber-300" />,
-    yesLabel: "Absolutely",
-    noLabel: "Maybe?"
+    text: "Do you like the little details?",
+    subtext: "Every sparkle and soft shadow was placed thinking of your smile.",
+    icon: <LucideSparkles className="w-12 h-12 text-[#ffd700]" />,
+    yesLabel: "They are lovely",
+    noLabel: "Didn't notice"
   },
   {
     id: 3,
-    text: "Are you comfortable in this corner of the internet?",
-    subtext: "I built this specifically to be a safe, quiet space just for you.",
-    icon: <LucideMoon className="w-12 h-12 text-indigo-300" />,
-    yesLabel: "Very much so",
-    noLabel: "Where am I?"
+    text: "Is your heart smiling right now?",
+    subtext: "Because that was the whole point of this entire quiet wish.",
+    icon: <LucideMoon className="w-12 h-12 text-[#a18cd1]" />,
+    yesLabel: "It really is",
+    noLabel: "Not yet..."
   },
   {
     id: 4,
-    text: "Finally... do you truly like this surprise?",
-    subtext: "Every detail was crafted thinking of what might make you smile.",
+    text: "Final check... are you happy you came here today?",
+    subtext: "Your presence is the most beautiful part of this entire surprise.",
     icon: <LucideSparkles className="w-12 h-12 text-accent-primary" />,
-    yesLabel: "I love it! 💝",
+    yesLabel: "I'm so glad! 💝",
     noLabel: "No"
   }
 ];
@@ -60,6 +61,7 @@ const QuestionBox = () => {
       setNoCount(0);
       setNoButtonPos({ x: 0, y: 0 });
     } else {
+      trackMilestone("Question Interaction Complete");
       setIsFinished(true);
     }
   };
@@ -96,14 +98,14 @@ const QuestionBox = () => {
   const currentQuestion = QUESTIONS[currentStep];
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto min-h-[550px] flex items-center justify-center p-4">
+    <div className="relative w-full max-w-2xl mx-auto min-h-[450px] md:min-h-[550px] flex items-center justify-center p-4">
       <AnimatePresence mode="wait">
         {isFinished ? (
           <motion.div
             key="finish"
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="glass p-16 rounded-[4rem] text-center space-y-8 relative overflow-hidden group w-full border border-white/10 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]"
+            className="bg-white/60 backdrop-blur-3xl p-8 md:p-16 rounded-[2.5rem] md:rounded-[4rem] text-center space-y-6 md:space-y-8 relative overflow-hidden group w-full border border-white shadow-[0_40px_100px_-20px_rgba(255,175,189,0.2)]"
           >
             {/* Background Animated Gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/10 via-transparent to-accent-secondary/10 opacity-50 mix-blend-overlay" />
@@ -114,13 +116,13 @@ const QuestionBox = () => {
                 filter: ["drop-shadow(0 0 10px rgba(255,175,189,0.3))", "drop-shadow(0 0 30px rgba(255,175,189,0.6))", "drop-shadow(0 0 10px rgba(255,175,189,0.3))"]
               }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="text-8xl relative z-10"
+              className="text-6xl md:text-8xl relative z-10"
             >
               💝✨💖
             </motion.div>
             <div className="space-y-4">
-              <h3 className="text-5xl md:text-6xl font-playfair italic relative z-10 text-accent-gradient">Yay! My Heart is Full!</h3>
-              <p className="text-foreground/60 text-xl font-light leading-relaxed max-w-sm mx-auto relative z-10 italic">
+              <h3 className="text-3xl md:text-6xl font-playfair italic relative z-10 text-accent-gradient">Yay! My Heart is Full!</h3>
+              <p className="text-lg md:text-xl text-foreground/60 font-light leading-relaxed max-w-sm mx-auto relative z-10 italic">
                 &quot;Small pixels, when put together with love, can hold a lot of warmth. Thank you for smiling.&quot;
               </p>
             </div>
@@ -145,7 +147,7 @@ const QuestionBox = () => {
             animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, x: -30, filter: 'blur(15px)' }}
             transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-            className="glass p-12 md:p-20 rounded-[4rem] text-center w-full relative z-10 border border-white/10 shadow-2xl overflow-hidden"
+            className="bg-white/40 backdrop-blur-3xl p-8 md:p-20 rounded-[2.5rem] md:rounded-[4rem] text-center w-full relative z-10 border border-white shadow-xl overflow-hidden"
           >
             {/* Internal Particles */}
             <div className="absolute inset-0 pointer-events-none">
@@ -204,31 +206,31 @@ const QuestionBox = () => {
             >
               <div className="relative group/icon">
                  <div className="absolute inset-0 bg-accent-primary/20 blur-2xl rounded-full opacity-0 group-hover/icon:opacity-100 transition-opacity duration-700" />
-                 <div className="w-28 h-28 rounded-[2rem] bg-white/5 flex items-center justify-center border border-white/10 shadow-[inset_0_0_20px_rgba(255,255,255,0.02)] backdrop-blur-sm relative z-10">
-                    {currentQuestion.icon}
+                 <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl md:rounded-[2rem] bg-white/5 flex items-center justify-center border border-white/10 shadow-[inset_0_0_20px_rgba(255,255,255,0.02)] backdrop-blur-sm relative z-10">
+                    {React.cloneElement(currentQuestion.icon as React.ReactElement, { className: "w-8 h-8 md:w-12 md:h-12" })}
                  </div>
               </div>
             </motion.div>
 
-            <div className="space-y-6 min-h-[180px] flex flex-col justify-center relative z-10">
-              <h3 className="text-3xl md:text-5xl font-playfair italic leading-tight tracking-tight">
+            <div className="space-y-4 md:space-y-6 min-h-[140px] md:min-h-[180px] flex flex-col justify-center relative z-10">
+              <h3 className="text-2xl md:text-5xl font-playfair italic leading-tight tracking-tight">
                 {noCount > 0 && currentStep === QUESTIONS.length - 1 ? getNoMessage() : currentQuestion.text}
               </h3>
-              <p className="text-foreground/30 text-lg md:text-xl font-light italic leading-relaxed max-w-sm mx-auto">
+              <p className="text-foreground/30 text-base md:text-xl font-light italic leading-relaxed max-w-sm mx-auto px-4">
                 {currentQuestion.subtext}
               </p>
             </div>
 
-            <div className="mt-16 flex flex-wrap items-center justify-center gap-8 relative z-20">
+            <div className="mt-10 md:mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8 relative z-20 px-4">
               <motion.button
                 style={{ scale: currentStep === QUESTIONS.length - 1 ? yesButtonScale : 1 }}
                 whileHover={{ 
                   scale: (currentStep === QUESTIONS.length - 1 ? yesButtonScale : 1) * 1.05,
-                  boxShadow: "0 20px 40px rgba(255, 175, 189, 0.2)"
+                  boxShadow: "0 20px 40px rgba(255, 175, 189, 0.3)"
                 }}
                 whileTap={{ scale: (currentStep === QUESTIONS.length - 1 ? yesButtonScale : 1) * 0.95 }}
                 onClick={handleNext}
-                className="px-16 py-7 bg-white text-black rounded-full font-bold text-lg tracking-wider shadow-2xl transition-all duration-300 transform"
+                className="w-full sm:w-auto px-8 md:px-16 py-4 md:py-7 bg-accent-primary text-white rounded-full font-bold text-base md:text-lg tracking-wider shadow-2xl transition-all duration-300 transform"
               >
                 {currentQuestion.yesLabel}
               </motion.button>
@@ -238,13 +240,14 @@ const QuestionBox = () => {
                   x: noButtonPos.x,
                   y: noButtonPos.y,
                   opacity: (currentStep === QUESTIONS.length - 1 && noCount > 12) ? 0 : 1,
-                  scale: (currentStep === QUESTIONS.length - 1 && noCount > 10) ? 0.8 : 1
+                  scale: (currentStep === QUESTIONS.length - 1 && noCount > 10) ? 0.6 : 1,
+                  rotate: noButtonPos.x / 10
                 }}
                 onMouseEnter={handleNoHover}
                 onClick={() => {
                    if (currentStep < QUESTIONS.length - 1) handleNext();
                 }}
-                className="px-10 py-6 glass border-white/10 text-foreground/40 hover:text-foreground hover:bg-white/5 transition-all font-medium text-lg rounded-full"
+                className="w-full sm:w-auto px-6 md:px-10 py-4 md:py-6 bg-gray-100/50 backdrop-blur-md border border-white text-gray-400 hover:text-gray-600 transition-all font-medium text-base md:text-lg rounded-full"
               >
                 {currentStep === QUESTIONS.length - 1 ? (noCount > 15 ? "Fine..." : currentQuestion.noLabel) : currentQuestion.noLabel}
               </motion.button>

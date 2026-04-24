@@ -65,7 +65,7 @@ const MusicPlayer = ({ autoPlayTrigger }: { autoPlayTrigger?: boolean }) => {
             initial={{ opacity: 0, scale: 0.8, y: 40, filter: 'blur(10px)' }}
             animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, scale: 0.8, y: 40, filter: 'blur(10px)' }}
-            className="glass-dark p-8 rounded-[3rem] w-80 shadow-2xl mb-4 relative z-10 overflow-hidden"
+            className="bg-white/95 backdrop-blur-3xl p-8 rounded-[3rem] w-80 shadow-[0_30px_60px_rgba(255,175,189,0.1)] mb-4 relative z-10 overflow-hidden border border-white"
           >
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-primary to-accent-secondary opacity-50" />
             <h4 className="text-[10px] font-bold uppercase tracking-[0.5em] text-accent-primary/60 mb-8 px-2">Stellar Playlist</h4>
@@ -112,7 +112,7 @@ const MusicPlayer = ({ autoPlayTrigger }: { autoPlayTrigger?: boolean }) => {
         {/* Main Player Pill */}
         <motion.div 
           layout
-          className="glass rounded-full p-2 flex items-center gap-2 shadow-2xl overflow-hidden"
+          className="bg-white/80 backdrop-blur-2xl rounded-full p-2 flex items-center gap-2 shadow-[0_20px_50px_rgba(255,175,189,0.1)] border border-white overflow-hidden"
         >
           <AnimatePresence mode="wait">
             {isPlaying && (
@@ -149,7 +149,7 @@ const MusicPlayer = ({ autoPlayTrigger }: { autoPlayTrigger?: boolean }) => {
 
             <button
               onClick={togglePlay}
-              className="relative w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+              className="relative w-12 h-12 bg-accent-primary text-white rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(255,175,189,0.3)]"
             >
               <audio
                 ref={audioRef}

@@ -30,25 +30,25 @@ const thoughts = [
 
 export default function ThoughtsPage() {
   return (
-    <div className="pt-48 pb-32 min-h-screen relative overflow-hidden bg-background mesh-gradient">
-      <div className="max-w-4xl mx-auto px-8 mb-32 relative z-10">
+    <div className="pt-32 md:pt-48 pb-32 min-h-screen relative overflow-hidden bg-background mesh-gradient">
+      <div className="max-w-4xl mx-auto px-6 md:px-8 mb-20 md:mb-32 relative z-10">
         <motion.div
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 1.2 }}
         >
-          <span className="text-[10px] tracking-[0.8em] uppercase text-accent-tertiary mb-8 block font-bold">Thoughts</span>
-          <h1 className="text-6xl md:text-[7rem] font-serif leading-none tracking-tighter mb-12">
+          <span className="text-[10px] tracking-[0.8em] uppercase text-accent-tertiary mb-6 md:mb-8 block font-bold">Thoughts</span>
+          <h1 className="text-5xl md:text-[7rem] font-serif leading-none tracking-tighter mb-8 md:mb-12">
             Nice <br />
             <span className="italic text-accent-gradient">Things</span>
           </h1>
-          <p className="text-xl md:text-2xl text-foreground/40 font-light leading-relaxed max-w-xl">
+          <p className="text-lg md:text-2xl text-foreground/40 font-light leading-relaxed max-w-xl">
             &quot;Thinking about why you are a great person and why I appreciate our digital connection.&quot;
           </p>
         </motion.div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-8 space-y-16 relative z-10">
+      <div className="max-w-4xl mx-auto px-6 md:px-8 space-y-8 md:space-y-16 relative z-10">
         {thoughts.map((thought, index) => (
           <motion.div 
             key={index}
@@ -57,14 +57,12 @@ export default function ThoughtsPage() {
             viewport={{ once: true }}
             transition={{ duration: 1 }}
           >
-            <div className="glass p-12 md:p-16 rounded-[3rem] relative overflow-hidden group hover:bg-white/[0.04] transition-all duration-700 font-sans">
-               <div className="flex items-center gap-4 mb-8">
-                  <LucideShieldCheck className="w-5 h-5 text-accent-primary opacity-40" />
-                  <span className="text-[10px] uppercase tracking-[0.4em] text-accent-primary font-bold">{thought.category}</span>
-               </div>
+            <div className="bg-white/40 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] h-full flex flex-col items-start hover:bg-white/60 transition-all duration-700 border border-white shadow-xl relative overflow-hidden group">
+               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <span className="text-[10px] uppercase tracking-[0.4em] text-accent-primary font-bold mb-6">{thought.category}</span>
                
-               <h2 className="text-3xl md:text-4xl font-serif mb-6 italic">{thought.title}</h2>
-               <p className="text-2xl text-foreground/70 font-light leading-relaxed italic">
+               <h2 className="text-2xl md:text-4xl font-serif mb-4 md:mb-6 italic">{thought.title}</h2>
+               <p className="text-xl md:text-2xl text-foreground/70 font-light leading-relaxed italic">
                  &quot;{thought.content}&quot;
                </p>
             </div>
@@ -72,12 +70,12 @@ export default function ThoughtsPage() {
         ))}
       </div>
 
-      <div className="mt-64 text-center relative z-10">
-        <Link href="/moments" className="group flex flex-col items-center gap-8">
-          <h3 className="text-4xl md:text-6xl font-serif italic mb-4 group-hover:text-accent-secondary transition-colors duration-700">
+      <div className="mt-32 md:mt-64 text-center relative z-10">
+        <Link href="/moments" className="group flex flex-col items-center gap-6 md:gap-8">
+          <h3 className="text-3xl md:text-6xl font-serif italic mb-4 group-hover:text-accent-secondary transition-colors duration-700">
             A Few Notes
           </h3>
-          <LucideArrowRight className="w-10 h-10 text-accent-secondary group-hover:translate-x-4 transition-transform duration-700" />
+          <LucideArrowRight className="w-8 h-8 md:w-10 md:h-10 text-accent-secondary group-hover:translate-x-4 transition-transform duration-700" />
         </Link>
       </div>
 

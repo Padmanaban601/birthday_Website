@@ -32,7 +32,7 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto min-h-[750px] glass rounded-[3.5rem] p-10 flex flex-col relative overflow-hidden backdrop-blur-3xl border border-white/10 shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
+    <div className="w-full max-w-lg mx-auto min-h-[600px] md:min-h-[750px] glass rounded-[2.5rem] md:rounded-[3.5rem] p-6 md:p-10 flex flex-col relative overflow-hidden backdrop-blur-3xl border border-white/10 shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-tertiary opacity-40" />
       
@@ -52,7 +52,7 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="text-4xl font-serif italic text-white leading-tight"
+            className="text-2xl md:text-4xl font-serif italic text-white leading-tight"
           >
             {step === 1 && "Choose a Flavor"}
             {step === 2 && "Sprinkle with Love"}
@@ -73,7 +73,7 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
             className="relative"
           >
             {/* The Cake Visual - Real-time 3D Look */}
-            <div className="relative w-64 h-56 md:w-80 md:h-64 group flex items-center justify-center">
+            <div className="relative w-48 h-40 sm:w-64 sm:h-56 md:w-80 md:h-64 group flex items-center justify-center">
               {/* Cake Shadow */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-4/5 h-10 bg-black/40 blur-2xl rounded-full" />
               
@@ -83,7 +83,7 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
                 animate={{ 
                   background: `linear-gradient(135deg, ${selectedFlavor.color}, ${selectedFlavor.secondary})`,
                 }}
-                className="absolute bottom-8 w-full h-32 md:h-40 rounded-t-[2rem] rounded-b-[1rem] shadow-2xl border-b-8 border-black/20 overflow-hidden z-20"
+                className="absolute bottom-8 w-full h-24 sm:h-32 md:h-40 rounded-t-[1.5rem] md:rounded-t-[2rem] rounded-b-[1rem] shadow-2xl border-b-8 border-black/20 overflow-hidden z-20"
               >
                 <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/sandpaper.png')]" />
                 <div className="absolute top-0 left-0 w-full h-3 bg-white/10" />
@@ -93,7 +93,7 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
               <motion.div 
                 layoutId="frosting"
                 animate={{ backgroundColor: selectedFlavor.secondary }}
-                className="absolute top-16 md:top-20 w-full h-20 md:h-24 rounded-full shadow-lg z-30 flex items-end justify-around px-8"
+                className="absolute top-12 sm:top-16 md:top-20 w-full h-16 sm:h-20 md:h-24 rounded-full shadow-lg z-30 flex items-end justify-around px-4 sm:px-8"
               >
                 {/* Real-time Drips */}
                 {[1, 2, 3, 4, 5].map(i => (
@@ -146,10 +146,10 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
                             rotate: [-5, 5, -5]
                           }}
                           transition={{ duration: 0.5, repeat: Infinity }}
-                          className="absolute -top-12 left-1/2 -translate-x-1/2"
+                          className="absolute -top-8 md:-top-12 left-1/2 -translate-x-1/2"
                         >
-                          <div className="w-10 h-14 bg-orange-400 rounded-full blur-[3px] shadow-[0_0_30px_#fb923c]" />
-                          <div className="w-5 h-8 bg-yellow-200 rounded-full absolute top-3 left-1/2 -translate-x-1/2 blur-[1px]" />
+                          <div className="w-6 h-10 md:w-10 md:h-14 bg-orange-400 rounded-full blur-[3px] shadow-[0_0_30px_#fb923c]" />
+                          <div className="w-3 h-5 md:w-5 md:h-8 bg-yellow-200 rounded-full absolute top-2 md:top-3 left-1/2 -translate-x-1/2 blur-[1px]" />
                         </motion.div>
                       )}
                     </motion.div>
@@ -162,7 +162,7 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
             <motion.div 
               animate={{ opacity: [0.2, 0.4, 0.2] }}
               transition={{ duration: 5, repeat: Infinity }}
-              className="w-80 h-4 bg-gradient-to-r from-accent-primary/10 via-white/30 to-accent-primary/10 blur-md rounded-full mt-10 active:scale-105 transition-transform" 
+              className="w-64 sm:w-80 h-4 bg-gradient-to-r from-accent-primary/10 via-white/30 to-accent-primary/10 blur-md rounded-full mt-6 md:mt-10 active:scale-105 transition-transform" 
             />
           </motion.div>
         </AnimatePresence>
@@ -181,7 +181,7 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
                 className={`flex flex-col items-center gap-3 transition-all ${selectedFlavor.name === f.name ? 'opacity-100' : 'opacity-25 hover:opacity-50'}`}
               >
                 <div 
-                  className={`w-14 h-14 rounded-full border-4 shadow-2xl transition-all ${selectedFlavor.name === f.name ? 'border-white scale-110' : 'border-white/5'}`} 
+                  className={`w-10 h-10 md:w-14 md:h-14 rounded-full border-2 md:border-4 shadow-2xl transition-all ${selectedFlavor.name === f.name ? 'border-white scale-110' : 'border-white/5'}`} 
                   style={{ backgroundColor: f.color }} 
                 />
                 <span className="text-[9px] uppercase tracking-[0.2em] font-black">{f.name}</span>
@@ -200,7 +200,7 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
                 onClick={() => toggleTopping(t.name)}
                 className={`flex flex-col items-center gap-3 transition-all ${selectedToppings.includes(t.name) ? 'opacity-100 scale-110' : 'opacity-25 hover:opacity-50'}`}
               >
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-4xl shadow-2xl transition-all ${selectedToppings.includes(t.name) ? 'glass bg-white/20' : 'glass-dark'}`}>
+                <div className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center text-2xl md:text-4xl shadow-2xl transition-all ${selectedToppings.includes(t.name) ? 'glass bg-white/20' : 'glass-dark'}`}>
                   {t.icon}
                 </div>
                 <span className="text-[9px] uppercase tracking-[0.2em] font-black">{t.name}</span>
@@ -215,10 +215,10 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
               whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(251,146,60,0.5)" }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setCandlesLit(true)}
-              className={`w-full py-7 rounded-2xl transition-all flex items-center justify-center gap-6 shadow-3xl border border-white/5 ${candlesLit ? 'bg-accent-primary text-white scale-105' : 'glass-dark hover:bg-white/5'}`}
+              className={`w-full py-4 md:py-7 rounded-2xl transition-all flex items-center justify-center gap-4 md:gap-6 shadow-3xl border border-white/5 ${candlesLit ? 'bg-accent-primary text-white scale-105' : 'glass-dark hover:bg-white/5'}`}
             >
-              <LucideFlame className={`w-6 h-6 ${candlesLit ? 'animate-pulse text-white' : 'text-foreground/20'}`} />
-              <span className="text-sm font-black uppercase tracking-[0.6em]">{candlesLit ? "Spark Joy!" : "Light Wishes"}</span>
+              <LucideFlame className={`w-5 h-5 md:w-6 md:h-6 ${candlesLit ? 'animate-pulse text-white' : 'text-foreground/20'}`} />
+              <span className="text-xs md:text-sm font-black uppercase tracking-[0.4em] md:tracking-[0.6em]">{candlesLit ? "Spark Joy!" : "Light Wishes"}</span>
             </motion.button>
           </div>
         )}

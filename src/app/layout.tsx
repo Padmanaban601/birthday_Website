@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
+import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -29,9 +30,11 @@ export default function RootLayout({
       className={`${outfit.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans selection:bg-primary-lavender/30">
-        <ClientLayout>
-          {children}
-        </ClientLayout>
+        <AnalyticsProvider>
+          <ClientLayout>
+            {children}
+          </ClientLayout>
+        </AnalyticsProvider>
       </body>
     </html>
   );
