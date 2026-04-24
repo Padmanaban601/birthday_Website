@@ -35,7 +35,7 @@ const Balloon = ({ delay, color, left, duration }: { delay: number; color: strin
 };
 
 const Balloons = () => {
-  const [balloons, setBalloons] = useState<{ id: number; delay: number; color: string; left: string }[]>([]);
+  const [balloons, setBalloons] = useState<{ id: number; delay: number; color: string; left: string; duration: number }[]>([]);
 
   useEffect(() => {
     const colors = ['#b19cd9', '#f4c2c2', '#e6e6fa', '#ffccf9'];
