@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LucideFlame, LucideSparkles, LucideCake, LucidePartyPopper } from 'lucide-react';
+import { trackMilestone } from '@/lib/analytics';
 
 const flavors = [
   { name: 'Vanilla', color: '#FFF9E3', secondary: '#F3E5AB' },
@@ -256,7 +257,13 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   whileHover={{ scale: 1.1, boxShadow: "0 0 50px rgba(255,255,255,0.4)" }}
-                  onClick={onComplete}
+                  onClick={() => {
+                    trackMilestone("Cake Delivered", {
+                      flavor: selectedFlavor.name,
+                      toppings: selectedToppings
+                    });
+                    onComplete();
+                  }}
                   className="px-10 py-4 bg-white text-black rounded-full text-[10px] uppercase tracking-[0.6em] font-black hover:bg-accent-tertiary transition-all shadow-2xl"
                 >
                   Deliver Gift

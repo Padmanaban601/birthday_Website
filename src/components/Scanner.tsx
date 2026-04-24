@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LucideSearch, LucideHeart, LucideCheckCircle } from 'lucide-react';
+import { trackMilestone } from '@/lib/analytics';
 
 const Scanner = () => {
   const [isScanning, setIsScanning] = useState(false);
@@ -21,6 +22,7 @@ const Scanner = () => {
         clearInterval(intervalRef.current!);
         setIsScanning(false);
         setScanComplete(true);
+        trackMilestone("Joy Scan Complete", { mood: "100% Pure Happiness" });
       }
     }, 30);
   };

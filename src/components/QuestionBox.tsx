@@ -9,17 +9,19 @@ interface Question {
   id: number;
   text: string;
   subtext: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
+  image: string;
   yesLabel: string;
   noLabel: string;
 }
+
 
 const QUESTIONS: Question[] = [
   {
     id: 1,
     text: "Does this digital world feel warm to you?",
     subtext: "I tried to capture a bit of sunshine in these pixels, just for you.",
-    icon: <LucideHeart className="w-12 h-12 text-[#ff8e9e]" />,
+    image: "/assets/q-warmth.png",
     yesLabel: "It feels like home ✨",
     noLabel: "A bit chilly"
   },
@@ -27,7 +29,7 @@ const QUESTIONS: Question[] = [
     id: 2,
     text: "Do you like the little details?",
     subtext: "Every sparkle and soft shadow was placed thinking of your smile.",
-    icon: <LucideSparkles className="w-12 h-12 text-[#ffd700]" />,
+    image: "/assets/q-details.png",
     yesLabel: "They are lovely",
     noLabel: "Didn't notice"
   },
@@ -35,7 +37,7 @@ const QUESTIONS: Question[] = [
     id: 3,
     text: "Is your heart smiling right now?",
     subtext: "Because that was the whole point of this entire quiet wish.",
-    icon: <LucideMoon className="w-12 h-12 text-[#a18cd1]" />,
+    image: "/assets/q-heart.png",
     yesLabel: "It really is",
     noLabel: "Not yet..."
   },
@@ -43,11 +45,12 @@ const QUESTIONS: Question[] = [
     id: 4,
     text: "Final check... are you happy you came here today?",
     subtext: "Your presence is the most beautiful part of this entire surprise.",
-    icon: <LucideSparkles className="w-12 h-12 text-accent-primary" />,
+    image: "/assets/q-joy.png",
     yesLabel: "I'm so glad! 💝",
     noLabel: "No"
   }
 ];
+
 
 const QuestionBox = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -55,16 +58,36 @@ const QuestionBox = () => {
   const [noCount, setNoCount] = useState(0);
   const [noButtonPos, setNoButtonPos] = useState({ x: 0, y: 0 });
 
-  const handleNext = () => {
+  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [finalMessage, setFinalMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+
+  const handleNext = (label?: string) => {
+    if (label) {
+      setAnswers(prev => ({ ...prev, [QUESTIONS[currentStep].id]: label }));
+    }
+
     if (currentStep < QUESTIONS.length - 1) {
       setCurrentStep(prev => prev + 1);
       setNoCount(0);
       setNoButtonPos({ x: 0, y: 0 });
     } else {
-      trackMilestone("Question Interaction Complete");
       setIsFinished(true);
     }
   };
+
+  const handleFinalSubmit = async () => {
+    setIsSending(true);
+    await trackMilestone("Birthday Response Received", {
+      answers,
+      message: finalMessage,
+      browser: typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown'
+    });
+    setIsSending(false);
+    setIsSent(true);
+  };
+
 
   const handleNoHover = useCallback(() => {
     if (currentStep === QUESTIONS.length - 1) {
@@ -112,33 +135,74 @@ const QuestionBox = () => {
             
             <motion.div 
               animate={{ 
-                scale: [1, 1.15, 1],
-                filter: ["drop-shadow(0 0 10px rgba(255,175,189,0.3))", "drop-shadow(0 0 30px rgba(255,175,189,0.6))", "drop-shadow(0 0 10px rgba(255,175,189,0.3))"]
+                scale: [1, 1.05, 1],
+              }}
+              transition={{ duration: 6, repeat: Infinity }}
+              className="relative z-10 w-48 h-48 mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/20"
+            >
+              <img src="/assets/cat-happy.png" alt="Happy Cat" className="w-full h-full object-cover" />
+            </motion.div>
+            
+            <motion.div 
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.5, 0.8, 0.5]
               }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="text-6xl md:text-8xl relative z-10"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 pointer-events-none"
             >
-              💝✨💖
+               <img src="/assets/success.png" alt="Success Bloom" className="w-full h-full object-contain opacity-20 blur-xl" />
             </motion.div>
+
+
             <div className="space-y-4">
-              <h3 className="text-3xl md:text-6xl font-playfair italic relative z-10 text-accent-gradient">Yay! My Heart is Full!</h3>
+              <h3 className="text-3xl md:text-6xl font-playfair italic relative z-10 text-accent-gradient">
+                {isSent ? "Message Sent! 💝" : "Leave a Note?"}
+              </h3>
               <p className="text-lg md:text-xl text-foreground/60 font-light leading-relaxed max-w-sm mx-auto relative z-10 italic">
-                &quot;Small pixels, when put together with love, can hold a lot of warmth. Thank you for smiling.&quot;
+                {isSent 
+                  ? "Thank you for the beautiful response. I'll cherish it forever." 
+                  : "If you'd like to say something back, I'd love to hear it. This stays between us."
+                }
               </p>
             </div>
-            <motion.button
-              whileHover={{ scale: 1.05, letterSpacing: "0.5em" }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                setIsFinished(false);
-                setCurrentStep(0);
-                setNoCount(0);
-                setNoButtonPos({ x: 0, y: 0 });
-              }}
-              className="px-10 py-4 text-[10px] uppercase tracking-[0.4em] text-foreground/40 hover:text-foreground transition-all font-bold relative z-10 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] rounded-full"
-            >
-              Start Over
-            </motion.button>
+
+            {!isSent ? (
+              <div className="space-y-6 relative z-10">
+                <textarea
+                  value={finalMessage}
+                  onChange={(e) => setFinalMessage(e.target.value)}
+                  placeholder="Write a little something..."
+                  className="w-full bg-white/20 backdrop-blur-md border border-white/40 rounded-3xl p-6 text-foreground placeholder:text-foreground/20 focus:outline-none focus:ring-2 focus:ring-accent-primary/30 transition-all min-h-[120px] text-lg font-light italic"
+                />
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleFinalSubmit}
+                  disabled={isSending}
+                  className="w-full py-5 bg-accent-primary text-white rounded-full font-bold text-lg tracking-widest shadow-xl disabled:opacity-50"
+                >
+                  {isSending ? "Sending..." : "Send Message"}
+                </motion.button>
+              </div>
+            ) : (
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                onClick={() => {
+                  setIsFinished(false);
+                  setCurrentStep(0);
+                  setNoCount(0);
+                  setNoButtonPos({ x: 0, y: 0 });
+                  setIsSent(false);
+                  setFinalMessage("");
+                }}
+                className="px-10 py-4 text-[10px] uppercase tracking-[0.4em] text-foreground/40 hover:text-foreground transition-all font-bold relative z-10 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] rounded-full"
+              >
+                Start Over
+              </motion.button>
+            )}
+
           </motion.div>
         ) : (
           <motion.div
@@ -204,12 +268,22 @@ const QuestionBox = () => {
               transition={{ delay: 0.3 }}
               className="mb-12 flex justify-center"
             >
-              <div className="relative group/icon">
-                 <div className="absolute inset-0 bg-accent-primary/20 blur-2xl rounded-full opacity-0 group-hover/icon:opacity-100 transition-opacity duration-700" />
-                 <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl md:rounded-[2rem] bg-white/5 flex items-center justify-center border border-white/10 shadow-[inset_0_0_20px_rgba(255,255,255,0.02)] backdrop-blur-sm relative z-10">
-                    {React.cloneElement(currentQuestion.icon as React.ReactElement<{ className?: string }>, { className: "w-8 h-8 md:w-12 md:h-12" })}
+             <div className="relative group/icon">
+                 <div className="absolute inset-0 bg-accent-primary/20 blur-3xl rounded-full opacity-0 group-hover/icon:opacity-100 transition-opacity duration-700" />
+                 <div className="w-24 h-24 md:w-40 md:h-40 rounded-3xl md:rounded-[2.5rem] bg-white/10 flex items-center justify-center border border-white/20 shadow-2xl backdrop-blur-sm relative z-10 overflow-hidden">
+                    <img 
+                      src={
+                        (noCount > 8 && currentStep === QUESTIONS.length - 1) ? "/assets/cat-gun.png" :
+                        (noCount > 0 && currentStep === QUESTIONS.length - 1) ? "/assets/cat-angry.png" :
+                        currentQuestion.image
+                      } 
+                      alt="Step Visual" 
+                      className={`w-full h-full object-cover transition-all duration-700 ${noCount > 5 ? 'scale-125 saturate-150' : 'group-hover/icon:scale-110'}`} 
+                    />
                  </div>
+
               </div>
+
             </motion.div>
 
             <div className="space-y-4 md:space-y-6 min-h-[140px] md:min-h-[180px] flex flex-col justify-center relative z-10">
@@ -229,7 +303,7 @@ const QuestionBox = () => {
                   boxShadow: "0 20px 40px rgba(255, 175, 189, 0.3)"
                 }}
                 whileTap={{ scale: (currentStep === QUESTIONS.length - 1 ? yesButtonScale : 1) * 0.95 }}
-                onClick={handleNext}
+                onClick={() => handleNext(currentQuestion.yesLabel)}
                 className="w-full sm:w-auto px-8 md:px-16 py-4 md:py-7 bg-accent-primary text-white rounded-full font-bold text-base md:text-lg tracking-wider shadow-2xl transition-all duration-300 transform"
               >
                 {currentQuestion.yesLabel}
@@ -245,12 +319,13 @@ const QuestionBox = () => {
                 }}
                 onMouseEnter={handleNoHover}
                 onClick={() => {
-                   if (currentStep < QUESTIONS.length - 1) handleNext();
+                   if (currentStep < QUESTIONS.length - 1) handleNext(currentQuestion.noLabel);
                 }}
                 className="w-full sm:w-auto px-6 md:px-10 py-4 md:py-6 bg-gray-100/50 backdrop-blur-md border border-white text-gray-400 hover:text-gray-600 transition-all font-medium text-base md:text-lg rounded-full"
               >
                 {currentStep === QUESTIONS.length - 1 ? (noCount > 15 ? "Fine..." : currentQuestion.noLabel) : currentQuestion.noLabel}
               </motion.button>
+
             </div>
             
             {/* Subtle glow follows current icon flavor */}

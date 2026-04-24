@@ -1,15 +1,19 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from 'react';
-import { LucideArrowRight, LucideSparkles } from 'lucide-react';
+import { LucideArrowRight, LucideSparkles, LucideHeart } from 'lucide-react';
 import Section from '@/components/Section';
 import Link from 'next/link';
 import Countdown from '@/components/Countdown';
 import Scanner from '@/components/Scanner';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import QuestionBox from '@/components/QuestionBox';
-import CakeMaker from '@/components/CakeMaker';
 import PasscodeLock from '@/components/PasscodeLock';
+import MemoryGallery from '@/components/MemoryGallery';
+import { trackMilestone } from '@/lib/analytics';
+import Magnetic from '@/components/Magnetic';
+import ScratchReveal from '@/components/ScratchReveal';
+import HorizontalJourney from '@/components/HorizontalJourney';
+
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -22,9 +26,6 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 1.1]);
   const y = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
-
-  // Handle locking state locally
-  // Passcode state handled locally, no auto-unlock
 
   return (
     <div ref={containerRef} className="relative bg-background text-foreground min-h-screen">
@@ -65,7 +66,7 @@ export default function Home() {
                       className="space-y-4 md:space-y-6"
                     >
                       <span className="text-[9px] md:text-xs uppercase text-accent-secondary block font-black">
-                        Est. 2026 • Chapter I
+                        Since 2005 • Chapter XXI
                       </span>
                     </motion.div>
 
@@ -80,25 +81,51 @@ export default function Home() {
                   </p>
 
                   <div className="pt-8">
-                    <button 
-                      onClick={() => document.getElementById('soul-check')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="group flex items-center justify-center gap-6 text-foreground/40 hover:text-foreground transition-all uppercase tracking-[0.4em] text-[10px] font-bold mx-auto"
-                    >
-                      Explore More <LucideArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
-                    </button>
+                    <Magnetic>
+                      <button 
+                        onClick={() => document.getElementById('soul-check')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="group flex items-center justify-center gap-6 text-foreground/40 hover:text-foreground transition-all uppercase tracking-[0.4em] text-[10px] font-bold mx-auto px-8 py-4 rounded-full border border-black/5 hover:border-black/10 bg-white/5 backdrop-blur-sm"
+                      >
+                        Explore More <LucideArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                      </button>
+                    </Magnetic>
                   </div>
                 </motion.div>
               </div>
             </section>
 
             {/* Countdown Area */}
-            <section className="py-20 md:py-32 relative flex justify-center">
+            <motion.section 
+              onViewportEnter={() => trackMilestone("Countdown Section Viewed")}
+              className="py-20 md:py-32 relative flex justify-center"
+            >
               <div className="absolute inset-0 bg-accent-primary/5 blur-[120px] opacity-20 pointer-events-none" />
               <div className="glass px-6 md:px-12 py-10 md:py-16 rounded-[2.5rem] md:rounded-[3rem] text-center max-w-4xl w-full mx-6 md:mx-8">
-                 <p className="text-[10px] uppercase tracking-[0.5em] text-foreground/30 mb-6 md:mb-8 font-bold">Waiting for June 1st</p>
-                 <Countdown targetDate="2026-06-01T00:00:00" />
+                 <p className="text-[10px] uppercase tracking-[0.5em] text-foreground/30 mb-6 md:mb-8 font-bold">Waiting for June 6th</p>
+                 <Countdown targetDate="2026-06-06T00:00:00" />
               </div>
-            </section>
+            </motion.section>
+
+            {/* Scratch Reveal Section */}
+            <Section className="py-24 flex flex-col items-center">
+              <div className="text-center mb-12">
+                <span className="text-[10px] uppercase tracking-[0.5em] text-accent-primary mb-4 font-bold block">A Secret for You</span>
+                <h2 className="text-4xl md:text-6xl font-serif italic">Something Hidden.</h2>
+              </div>
+              <ScratchReveal 
+                width={400} 
+                height={250} 
+                onComplete={() => trackMilestone("Secret Message Revealed")}
+                className="shadow-2xl"
+              >
+                <div className="text-center space-y-4">
+                  <LucideHeart className="w-8 h-8 text-accent-primary mx-auto animate-bounce" />
+                  <p className="text-xl font-serif italic text-foreground/80 leading-relaxed">
+                    &quot;You are the most amazing person I know. Happy Birthday!&quot;
+                  </p>
+                </div>
+              </ScratchReveal>
+            </Section>
 
             {/* Quote Section */}
             <Section className="py-32 md:py-64 relative overflow-hidden">
@@ -124,14 +151,21 @@ export default function Home() {
                   <div className="flex justify-center md:justify-end mt-8 md:mt-12">
                      <p className="text-lg md:text-xl text-foreground/40 max-w-lg leading-relaxed font-light italic text-center md:text-right">
                       This is for you, because you make everything better just by being yourself. No pressure, just a simple thank you.
-                    </p>
+                     </p>
                   </div>
                 </motion.div>
               </div>
             </Section>
 
+            {/* Horizontal Journey Section */}
+            <HorizontalJourney />
+
             {/* Mood Check Section */}
-            <section id="soul-check" className="py-24 md:py-48 px-6 md:px-8">
+            <motion.section 
+              id="soul-check" 
+              onViewportEnter={() => trackMilestone("Mood Check Viewed")}
+              className="py-24 md:py-48 px-6 md:px-8"
+            >
               <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
                 <div className="lg:col-span-5 flex flex-col justify-center text-center lg:text-left">
                    <span className="text-[10px] uppercase tracking-[0.5em] text-accent-tertiary mb-6 font-bold">Your Mood</span>
@@ -147,21 +181,12 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </section>
+            </motion.section>
 
-            {/* Question Section */}
-            <section id="happiness-check" className="py-24 md:py-48 px-6 md:px-8 bg-white/5">
-              <div className="max-w-4xl mx-auto text-center">
-                <div className="mb-12 md:mb-24">
-                  <span className="text-[10px] tracking-[0.8em] uppercase text-accent-secondary block font-bold mb-6 md:mb-8">Interaction</span>
-                  <h2 className="text-4xl sm:text-5xl md:text-8xl font-serif italic mb-6 md:mb-8 text-gray-900">A Quiet <br /><span className="text-accent-gradient not-italic">Conversation.</span></h2>
-                  <p className="text-gray-400 text-lg md:text-xl font-light tracking-wide italic max-w-lg mx-auto leading-relaxed px-4">
-                    &quot;Honest answers are the only ones that truly matter. There are no wrong ones here.&quot;
-                  </p>
-                </div>
-                <QuestionBox />
-              </div>
-            </section>
+            {/* Memory Gallery Section */}
+            <motion.div onViewportEnter={() => trackMilestone("Gallery Viewed")}>
+              <MemoryGallery />
+            </motion.div>
 
             {/* Next Section Link - Premium Reveal */}
             <section className="py-40 md:py-80 relative flex flex-col items-center justify-center overflow-hidden px-6 md:px-8">
@@ -171,21 +196,23 @@ export default function Home() {
                 className="absolute w-[600px] md:w-[1000px] h-[600px] md:h-[1000px] bg-accent-primary/5 blur-[150px] md:blur-[200px] rounded-full opacity-30" 
               />
               
-              <Link 
-                href="/thoughts" 
-                className="group bg-white/40 backdrop-blur-2xl px-8 md:px-24 py-16 md:py-32 rounded-[3rem] md:rounded-[6rem] border border-white shadow-2xl text-center relative z-10 hover:bg-white/60 transition-all duration-700 max-w-4xl w-full"
-              >
-                <span className="text-[10px] md:text-xs uppercase tracking-[0.8em] text-accent-tertiary block font-black mb-8 md:mb-12">Next Chapter</span>
-                <h3 className="text-4xl md:text-8xl font-serif italic mb-8 md:mb-16 group-hover:text-accent-primary transition-colors duration-700 leading-none tracking-tighter text-gray-900">
-                  Digital <br />
-                  <span className="text-accent-gradient not-italic">Notes.</span>
-                </h3>
-                <div className="flex items-center justify-center gap-6 opacity-40 group-hover:opacity-100 transition-all">
-                   <div className="h-px w-8 md:w-16 bg-accent-primary/30" />
-                   <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.4em]">Read the Thoughts</span>
-                   <LucideArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-                </div>
-              </Link>
+              <Magnetic>
+                <Link 
+                  href="/thoughts" 
+                  className="group block bg-white/40 backdrop-blur-2xl px-8 md:px-24 py-16 md:py-32 rounded-[3rem] md:rounded-[6rem] border border-white shadow-2xl text-center relative z-10 hover:bg-white/60 transition-all duration-700 max-w-4xl w-full"
+                >
+                  <span className="text-[10px] md:text-xs uppercase tracking-[0.8em] text-accent-tertiary block font-black mb-8 md:mb-12">Next Chapter</span>
+                  <h3 className="text-4xl md:text-8xl font-serif italic mb-8 md:mb-16 group-hover:text-accent-primary transition-colors duration-700 leading-none tracking-tighter text-gray-900">
+                    Digital <br />
+                    <span className="text-accent-gradient not-italic">Notes.</span>
+                  </h3>
+                  <div className="flex items-center justify-center gap-6 opacity-40 group-hover:opacity-100 transition-all">
+                     <div className="h-px w-8 md:w-16 bg-accent-primary/30" />
+                     <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.4em]">Read the Thoughts</span>
+                     <LucideArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                  </div>
+                </Link>
+              </Magnetic>
             </section>
 
             <footer className="py-24 border-t border-black/5 text-center relative bg-white/5">
@@ -198,3 +225,4 @@ export default function Home() {
     </div>
   );
 }
+

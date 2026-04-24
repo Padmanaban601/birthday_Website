@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LucideHeart, LucideMenu, LucideX, LucideLogOut } from 'lucide-react';
+import { trackMilestone } from '@/lib/analytics';
+import Magnetic from './Magnetic';
 
 const navItems = [
   { name: 'Home', path: '/' },
@@ -47,22 +49,23 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-10">
           {navItems.map((item) => (
-            <Link 
-              key={item.path} 
-              href={item.path}
-              className="relative text-[10px] font-black tracking-[0.4em] uppercase text-gray-400 hover:text-gray-800 transition-all duration-500 py-1"
-            >
-              {item.name}
-              {pathname === item.path && (
-                <motion.div 
-                  layoutId="nav-glow"
-                  className="absolute -bottom-2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary to-transparent shadow-[0_0_15px_rgba(255,175,189,0.5)]"
-                />
-              )}
-            </Link>
+            <Magnetic key={item.path}>
+              <Link 
+                href={item.path}
+                onClick={() => trackMilestone("Navigation Clicked", { to: item.name })}
+                className="relative text-[10px] font-black tracking-[0.4em] uppercase text-gray-400 hover:text-gray-800 transition-all duration-500 py-1"
+              >
+                {item.name}
+                {pathname === item.path && (
+                  <motion.div 
+                    layoutId="nav-glow"
+                    className="absolute -bottom-2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary to-transparent shadow-[0_0_15px_rgba(255,175,189,0.5)]"
+                  />
+                )}
+              </Link>
+            </Magnetic>
           ))}
           
           <button 
@@ -96,7 +99,10 @@ const Navbar = () => {
               <Link 
                 key={item.path} 
                 href={item.path}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  trackMilestone("Mobile Navigation Clicked", { to: item.name });
+                }}
                 className={`text-xl font-serif italic py-2 border-b border-gray-100 last:border-0 ${pathname === item.path ? 'text-accent-primary' : 'text-gray-400'}`}
               >
                 {item.name}

@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LucideVolume2, LucideVolumeX, LucideSkipForward, LucideSkipBack, LucideListMusic, LucideCirclePlay, LucideCirclePause } from 'lucide-react';
+import { LucideVolume2, LucideVolumeX, LucideSkipForward, LucideSkipBack, LucideListMusic, LucideCirclePlay, LucideCirclePause, LucideHeart } from 'lucide-react';
+import { trackMilestone } from '@/lib/analytics';
+import { useAudio } from './AudioProvider';
 
 const playlist = [
   {
@@ -13,10 +15,9 @@ const playlist = [
 ];
 
 const MusicPlayer = ({ autoPlayTrigger }: { autoPlayTrigger?: boolean }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { audioRef, isPlaying, setIsPlaying } = useAudio();
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [showPlaylist, setShowPlaylist] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const currentTrack = playlist[currentTrackIndex];
 
@@ -27,7 +28,7 @@ const MusicPlayer = ({ autoPlayTrigger }: { autoPlayTrigger?: boolean }) => {
         audioRef.current.play().catch(e => console.log("Auto-play failed:", e));
       }
     }
-  }, [autoPlayTrigger]);
+  }, [autoPlayTrigger, setIsPlaying, audioRef]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -36,7 +37,7 @@ const MusicPlayer = ({ autoPlayTrigger }: { autoPlayTrigger?: boolean }) => {
         audioRef.current.play().catch(e => console.log("Audio play failed:", e));
       }
     }
-  }, [currentTrackIndex]);
+  }, [currentTrackIndex, isPlaying, audioRef]);
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -44,17 +45,22 @@ const MusicPlayer = ({ autoPlayTrigger }: { autoPlayTrigger?: boolean }) => {
         audioRef.current.pause();
       } else {
         audioRef.current.play().catch(e => console.log("Audio play failed:", e));
+        trackMilestone("Music Played", { track: currentTrack.title });
       }
       setIsPlaying(!isPlaying);
     }
   };
 
   const nextTrack = () => {
-    setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
+    const nextIndex = (currentTrackIndex + 1) % playlist.length;
+    setCurrentTrackIndex(nextIndex);
+    trackMilestone("Music Skipped Forward", { to: playlist[nextIndex].title });
   };
 
   const prevTrack = () => {
-    setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
+    const prevIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+    setCurrentTrackIndex(prevIndex);
+    trackMilestone("Music Skipped Backward", { to: playlist[prevIndex].title });
   };
 
   return (
@@ -140,11 +146,20 @@ const MusicPlayer = ({ autoPlayTrigger }: { autoPlayTrigger?: boolean }) => {
           </AnimatePresence>
 
           <div className="flex gap-1">
-             <button
+            <button
               onClick={() => setShowPlaylist(!showPlaylist)}
               className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${showPlaylist ? 'bg-accent-primary text-white' : 'hover:bg-white/10 text-foreground/40 hover:text-foreground'}`}
             >
               <LucideListMusic className="w-5 h-5" />
+            </button>
+
+            <button
+              onClick={async () => {
+                trackMilestone("Heart Reaction Sent", { time: new Date().toLocaleTimeString() });
+              }}
+              className="w-12 h-12 rounded-full flex items-center justify-center bg-white/5 text-accent-primary hover:bg-accent-primary/10 hover:scale-110 active:scale-95 transition-all"
+            >
+              <LucideHeart className="w-5 h-5 fill-current" />
             </button>
 
             <button
@@ -156,6 +171,7 @@ const MusicPlayer = ({ autoPlayTrigger }: { autoPlayTrigger?: boolean }) => {
                 src={currentTrack.url}
                 loop
                 onEnded={nextTrack}
+                crossOrigin="anonymous"
               />
               {isPlaying ? <LucideCirclePause className="w-6 h-6" /> : <LucideCirclePlay className="w-6 h-6" />}
             </button>
@@ -167,3 +183,4 @@ const MusicPlayer = ({ autoPlayTrigger }: { autoPlayTrigger?: boolean }) => {
 };
 
 export default MusicPlayer;
+

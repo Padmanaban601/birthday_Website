@@ -7,6 +7,8 @@ import { LucideHeart, LucideArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { trackMilestone } from '@/lib/analytics';
+import QuestionBox from '@/components/QuestionBox';
+
 
 export default function FinalPage() {
   const [clicked, setClicked] = useState(false);
@@ -53,6 +55,18 @@ export default function FinalPage() {
               &quot;I am so glad we crossed paths. May your life be filled with the same light you bring to others.&quot;
             </p>
 
+            <motion.div
+              animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-48 h-48 md:w-64 md:h-64 mx-auto mb-8"
+            >
+              <img 
+                src="/assets/gift-box.png" 
+                alt="Ethereal Gift" 
+                className="w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(255,215,0,0.3)]"
+              />
+            </motion.div>
+
             <button 
               onClick={() => setClicked(true)}
               className="group relative flex flex-col items-center gap-8"
@@ -69,6 +83,22 @@ export default function FinalPage() {
                 {clicked ? 'Shared Forever' : 'Seal the Wish'}
               </span>
             </button>
+
+            {clicked && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+                className="pt-24 border-t border-black/5"
+              >
+                 <div className="mb-12">
+                   <span className="text-[10px] tracking-[0.8em] uppercase text-accent-secondary block font-bold mb-6">Final Interaction</span>
+                   <h2 className="text-4xl md:text-7xl font-serif italic mb-6 text-gray-900">A Few <br /><span className="text-accent-gradient not-italic">Quick Questions.</span></h2>
+                 </div>
+                 <QuestionBox />
+              </motion.div>
+            )}
+
 
           <motion.div 
             initial={{ opacity: 0 }}

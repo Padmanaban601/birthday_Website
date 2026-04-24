@@ -9,6 +9,10 @@ import Navbar from './Navbar';
 import MusicPlayer from './MusicPlayer';
 import HeartTrail from './HeartTrail';
 import PasscodeLock from './PasscodeLock';
+import { trackMilestone } from '@/lib/analytics';
+import { AudioProvider } from './AudioProvider';
+import BlessingBubbles from './BlessingBubbles';
+import ReactiveAura from './ReactiveAura';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -41,14 +45,11 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const handleUnlock = () => {
     setIsUnlocked(true);
     localStorage.setItem('birthday_unlocked', 'true');
+    trackMilestone("Site Unlocked", { method: "Passcode" });
   };
 
   return (
-    <>
-      <AnimatePresence>
-      {/* PasscodeLock is now the initial screen handled in page.tsx */}
-      </AnimatePresence>
-
+    <AudioProvider>
       <AnimatePresence mode="wait">
         {!isUnlocked ? (
           <motion.div
@@ -62,12 +63,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             <PasscodeLock onSuccess={handleUnlock} />
           </motion.div>
         ) : (
-          <motion.div
-            key="unlocked-content"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="contents"
-          >
+          <div key="unlocked-content" className="relative min-h-screen flex flex-col">
             <Navbar />
             <AnimatePresence mode="wait">
               <motion.main
@@ -83,12 +79,15 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             </AnimatePresence>
             <MusicPlayer autoPlayTrigger={true} />
             <HeartTrail />
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
       
       {/* Immersive Background System */}
       <div className="fixed inset-0 pointer-events-none -z-20 overflow-hidden bg-background mesh-gradient transition-all duration-[2000ms]">
+        <BlessingBubbles />
+        <ReactiveAura />
+        
         {/* Dynamic Interactive Glow */}
         <motion.div 
           className="absolute w-[800px] h-[800px] bg-accent-primary/20 blur-[160px] rounded-full opacity-60"
@@ -131,6 +130,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           ));
         })()}
       </div>
-    </>
+    </AudioProvider>
   );
 }
+
+

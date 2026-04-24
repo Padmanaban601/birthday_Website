@@ -10,26 +10,32 @@ export const trackMilestone = async (name: string, properties: Record<string, an
     posthog.capture(name, properties);
   }
 
-  // 2. Milestone Notification (Placeholder for Webhook)
-  // Replace the URL with your Formspree or Discord Webhook URL to get real-time pings!
+  // 2. Milestone Notification (Webhook or Formspree)
   const webhookUrl = process.env.NEXT_PUBLIC_MILESTONE_WEBHOOK || "";
+  const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID || "";
   
-  if (webhookUrl) {
+  if (webhookUrl || formspreeId) {
     try {
-      await fetch(webhookUrl, {
+      const endpoint = formspreeId 
+        ? `https://formspree.io/f/${formspreeId}`
+        : webhookUrl;
+
+      await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          milestone: name,
+          message: `New Birthday Response: ${name}`,
+          ...properties,
+          _subject: `Birthday Site: ${name}`, // For Formspree
           timestamp: new Date().toISOString(),
-          details: properties,
           url: typeof window !== "undefined" ? window.location.href : "unknown"
         }),
       });
     } catch (error) {
-      console.warn("Milestone ping failed:", error);
+      console.warn("Milestone delivery failed:", error);
     }
   }
+
 
   console.log(`[Milestone Recorded]: ${name}`, properties);
 };
