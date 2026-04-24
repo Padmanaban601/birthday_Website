@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-const Balloon = ({ delay, color, left }: { delay: number; color: string; left: string }) => {
+const Balloon = ({ delay, color, left, duration }: { delay: number; color: string; left: string; duration: number }) => {
   return (
     <motion.div
       initial={{ y: "110vh", x: 0, opacity: 0 }}
@@ -13,7 +13,7 @@ const Balloon = ({ delay, color, left }: { delay: number; color: string; left: s
         opacity: [0, 1, 1, 0]
       }}
       transition={{ 
-        duration: 15 + Math.random() * 10,
+        duration: duration,
         delay: delay,
         repeat: Infinity,
         ease: "linear"
@@ -39,13 +39,14 @@ const Balloons = () => {
 
   useEffect(() => {
     const colors = ['#b19cd9', '#f4c2c2', '#e6e6fa', '#ffccf9'];
-    const newBalloons = Array.from({ length: 15 }).map((_, i) => ({
+    const generated = Array.from({ length: 15 }).map((_, i) => ({
       id: i,
-      delay: Math.random() * 20,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      left: `${Math.random() * 100}%`
+      delay: (i * 1.3) % 20,
+      color: colors[i % colors.length],
+      left: `${(i * 7) % 100}%`,
+      duration: 15 + (i % 10)
     }));
-    setBalloons(newBalloons);
+    setTimeout(() => setBalloons(generated), 0);
   }, []);
 
   return (

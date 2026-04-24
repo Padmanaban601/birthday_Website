@@ -21,12 +21,15 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    const timer = setTimeout(() => setIsMounted(true), 0);
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   return (
@@ -55,8 +58,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               <div className="space-y-6">
                 <span className="text-[10px] tracking-[1em] uppercase text-accent-tertiary block font-bold">Today is Special</span>
                 <h2 className="text-5xl md:text-7xl font-serif italic leading-tight">
-                  "A simple gift <br />
-                  <span className="text-accent-gradient not-italic font-normal">waiting for you."</span>
+                  &quot;A simple gift <br />
+                  <span className="text-accent-gradient not-italic font-normal">waiting for you.&quot;</span>
                 </h2>
               </div>
 
@@ -106,21 +109,31 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         {/* Stellar Field */}
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay" />
         
-        {isMounted && [...Array(40)].map((_, i) => (
-          <div 
-            key={i}
-            className={`absolute rounded-full opacity-[0.4] blur-[1px] animate-pulse`}
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              width: `${Math.random() * 3}px`,
-              height: `${Math.random() * 3}px`,
-              backgroundColor: i % 2 === 0 ? '#ffd700' : '#f8c8dc',
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${2 + Math.random() * 3}s`
-            }}
-          />
-        ))}
+        {isMounted && (() => {
+          const stars = Array.from({ length: 40 }, (_, i) => ({
+            top: `${(i * 17) % 100}%`,
+            left: `${(i * 23) % 100}%`,
+            width: `${1 + (i % 3)}px`,
+            height: `${1 + (i % 3)}px`,
+            delay: (i * 0.1) % 5,
+            duration: 2 + (i % 3)
+          }));
+          return stars.map((s, i) => (
+            <div 
+              key={i}
+              className={`absolute rounded-full opacity-[0.4] blur-[1px] animate-pulse`}
+              style={{
+                top: s.top,
+                left: s.left,
+                width: s.width,
+                height: s.height,
+                backgroundColor: i % 2 === 0 ? '#ffd700' : '#f8c8dc',
+                animationDelay: `${s.delay}s`,
+                animationDuration: `${s.duration}s`
+              }}
+            />
+          ));
+        })()}
       </div>
     </>
   );

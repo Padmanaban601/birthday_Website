@@ -72,24 +72,31 @@ export default function FinalPage() {
       <AnimatePresence>
         {clicked && (
           <div className="absolute inset-0 pointer-events-none z-20">
-            {[...Array(40)].map((_, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 0, x: 0 }}
-                animate={{ 
-                  opacity: [0, 1, 0], 
-                  y: -800,
-                  x: (Math.random() - 0.5) * 600
-                }}
-                exit={{ opacity: 0 }}
-                transition={{ 
-                  duration: 5 + Math.random() * 5, 
-                  repeat: Infinity,
-                  delay: Math.random() * 3
-                }}
-                className={`absolute left-1/2 bottom-0 w-1 h-1 rounded-full blur-[2px] ${i % 2 === 0 ? 'bg-accent-primary' : 'bg-accent-secondary'}`}
-              />
-            ))}
+            {(() => {
+              const particles = Array.from({ length: 40 }, (_, i) => ({
+                x: (i % 10 - 5) * 60 + (i % 3 * 20),
+                duration: 5 + (i % 5),
+                delay: (i * 0.1) % 3
+              }));
+              return particles.map((p, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 0, x: 0 }}
+                  animate={{ 
+                    opacity: [0, 1, 0], 
+                    y: -800,
+                    x: p.x
+                  }}
+                  exit={{ opacity: 0 }}
+                  transition={{ 
+                    duration: p.duration, 
+                    repeat: Infinity,
+                    delay: p.delay
+                  }}
+                  className={`absolute left-1/2 bottom-0 w-1 h-1 rounded-full blur-[2px] ${i % 2 === 0 ? 'bg-accent-primary' : 'bg-accent-secondary'}`}
+                />
+              ));
+            })()}
           </div>
         )}
       </AnimatePresence>

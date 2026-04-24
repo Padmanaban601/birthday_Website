@@ -20,6 +20,50 @@ interface PasscodeLockProps {
 
 const CORRECT_PASSCODE = "1506"; 
 
+const getReaction = (wrongCount: number) => {
+  const reactions = [
+    { 
+      icon: <LucideShieldAlert className="w-24 h-24 text-red-500" />, 
+      title: "HOW DARE YOU!", 
+      subtitle: "Wrong code detected. Are you an intruder?",
+      color: "from-red-50 to-red-100"
+    },
+    { 
+      icon: <LucideGhost className="w-24 h-24 text-orange-500" />, 
+      title: "NICE TRY!", 
+      subtitle: "The bunny is watching you. Try again...",
+      color: "from-orange-50 to-orange-100"
+    },
+    { 
+      icon: <LucideXCircle className="w-24 h-24 text-pink-600" />, 
+      title: "REALLY?", 
+      subtitle: "The cat is not amused. Think harder!",
+      color: "from-pink-50 to-pink-100"
+    }
+  ];
+  
+  return reactions[wrongCount % reactions.length];
+};
+
+const WrongReactionDisplay = ({ count }: { count: number }) => {
+  const reaction = getReaction(count);
+
+  return (
+    <div className={`w-full aspect-square rounded-[2rem] bg-gradient-to-br ${reaction.color} flex flex-col items-center justify-center p-8 space-y-6 border-4 border-white shadow-inner`}>
+      <motion.div
+        animate={{ scale: [1, 1.1, 1], rotate: [0, -5, 5, 0] }}
+        transition={{ duration: 0.5, repeat: Infinity, repeatType: "mirror" }}
+      >
+        {reaction.icon}
+      </motion.div>
+      <div className="space-y-2">
+          <h3 className="text-2xl font-black text-gray-800 tracking-tight">{reaction.title}</h3>
+          <p className="text-sm text-gray-500 font-medium italic">{reaction.subtitle}</p>
+      </div>
+    </div>
+  );
+};
+
 export default function PasscodeLock({ onSuccess }: PasscodeLockProps) {
   const [passcode, setPasscode] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +84,7 @@ export default function PasscodeLock({ onSuccess }: PasscodeLockProps) {
   useEffect(() => {
     if (passcode.length === 4) {
       if (passcode === CORRECT_PASSCODE) {
-        setShowGiftAccept(true);
+        setTimeout(() => setShowGiftAccept(true), 0);
       } else {
         const timer = setTimeout(() => {
           setWrongCount(prev => prev + 1);
@@ -51,46 +95,6 @@ export default function PasscodeLock({ onSuccess }: PasscodeLockProps) {
       }
     }
   }, [passcode]);
-
-  const WrongReaction = () => {
-    const reactions = [
-      { 
-        icon: <LucideShieldAlert className="w-24 h-24 text-red-500" />, 
-        title: "HOW DARE YOU!", 
-        subtitle: "Wrong code detected. Are you an intruder?",
-        color: "from-red-50 to-red-100"
-      },
-      { 
-        icon: <LucideGhost className="w-24 h-24 text-orange-500" />, 
-        title: "NICE TRY!", 
-        subtitle: "The bunny is watching you. Try again...",
-        color: "from-orange-50 to-orange-100"
-      },
-      { 
-        icon: <LucideXCircle className="w-24 h-24 text-pink-600" />, 
-        title: "REALLY?", 
-        subtitle: "The cat is not amused. Think harder!",
-        color: "from-pink-50 to-pink-100"
-      }
-    ];
-    
-    const reaction = reactions[wrongCount % reactions.length];
-
-    return (
-      <div className={`w-full aspect-square rounded-[2rem] bg-gradient-to-br ${reaction.color} flex flex-col items-center justify-center p-8 space-y-6 border-4 border-white shadow-inner`}>
-        <motion.div
-          animate={{ scale: [1, 1.1, 1], rotate: [0, -5, 5, 0] }}
-          transition={{ duration: 0.5, repeat: Infinity, repeatType: "mirror" }}
-        >
-          {reaction.icon}
-        </motion.div>
-        <div className="space-y-2">
-            <h3 className="text-2xl font-black text-gray-800 tracking-tight">{reaction.title}</h3>
-            <p className="text-sm text-gray-500 font-medium italic">{reaction.subtitle}</p>
-        </div>
-      </div>
-    );
-  };
 
   if (showGiftAccept) {
     return (
@@ -119,7 +123,7 @@ export default function PasscodeLock({ onSuccess }: PasscodeLockProps) {
             <div className="space-y-4">
                 <h2 className="text-3xl font-black text-[#FF4D6D] uppercase tracking-tight">Pls Accept the Gift</h2>
                 <p className="text-[#FF8E9E] font-bold italic leading-relaxed">
-                    "I spent a lot of time on this <br />just for you..."
+                    &quot;I spent a lot of time on this <br />just for you...&quot;
                 </p>
             </div>
             
@@ -162,7 +166,7 @@ export default function PasscodeLock({ onSuccess }: PasscodeLockProps) {
             className="fixed inset-0 z-[110] bg-black/80 flex flex-col items-center justify-center p-8 backdrop-blur-sm"
           >
             <div className="max-w-sm w-full bg-white rounded-[3.5rem] p-10 text-center space-y-8 shadow-[0_0_50px_rgba(255,77,109,0.3)] border-4 border-white">
-                <WrongReaction />
+                <WrongReactionDisplay count={wrongCount} />
                 <button 
                     onClick={() => setError(null)}
                     className="w-full py-5 bg-gray-900 text-white rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl hover:scale-105 transition-transform active:scale-95"

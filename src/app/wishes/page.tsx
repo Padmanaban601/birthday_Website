@@ -51,7 +51,7 @@ export default function WishesPage() {
             <span className="italic font-normal text-accent-gradient">Wishes</span>
           </h1>
           <p className="text-xl md:text-2xl text-foreground/40 font-light max-w-xl leading-relaxed italic">
-            "Simple words coming from my heart to yours. I hope they make you smile."
+            &quot;Simple words coming from my heart to yours. I hope they make you smile.&quot;
           </p>
         </motion.div>
       </div>
@@ -74,7 +74,7 @@ export default function WishesPage() {
               <span className="text-[10px] uppercase tracking-[0.5em] text-accent-primary mb-10 block font-bold">Wish • 0{index + 1}</span>
               <h2 className="text-4xl md:text-6xl font-serif mb-12">{wish.title}</h2>
               <p className="text-2xl md:text-4xl text-foreground/80 leading-snug font-light italic">
-                "{wish.message}"
+                &quot;{wish.message}&quot;
               </p>
               
               <div className="mt-16 w-32 h-px bg-white/10 group-hover:w-full transition-all duration-1000" />
@@ -91,7 +91,7 @@ export default function WishesPage() {
             className="p-16 glass rounded-[3rem] relative"
           >
              <LucideHeart className="w-12 h-12 text-accent-secondary/30 mx-auto mb-10 animate-pulse" />
-             <h3 className="text-3xl font-serif italic mb-8">"Keep being you."</h3>
+             <h3 className="text-3xl font-serif italic mb-8">&quot;Keep being you.&quot;</h3>
              <p className="text-foreground/40 font-light italic leading-relaxed">
               I wish the best for you today and always. You are a special person.
             </p>

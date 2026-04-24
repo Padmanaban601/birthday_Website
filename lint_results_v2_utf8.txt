@@ -1,0 +1,157 @@
+﻿
+> hb@0.1.0 lint
+> eslint
+
+
+C:\Users\PADMANABAN\hb\.vercel\output\functions\_global-error.rsc.func\___next_launcher.cjs
+  11:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  46:18  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\PADMANABAN\hb\src\app\final\page.tsx
+  4:8  warning  'Section' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\app\moments\page.tsx
+  5:34  warning  'LucideStar' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\app\page.tsx
+  32:30  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\PADMANABAN\hb\src\app\page.tsx:32:30
+  30 |   useEffect(() => {
+  31 |     const unlocked = localStorage.getItem('birthday_unlocked');
+> 32 |     if (unlocked === 'true') setIsUnlocked(true);
+     |                              ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  33 |   }, []);
+  34 |
+  35 |   const handleUnlock = () => {  react-hooks/set-state-in-effect
+
+C:\Users\PADMANABAN\hb\src\app\thoughts\page.tsx
+  4:29  warning  'LucideSparkles' is defined but never used  @typescript-eslint/no-unused-vars
+  4:45  warning  'LucideHeart' is defined but never used     @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\app\wishes\page.tsx
+  4:8  warning  'Section' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\components\Balloons.tsx
+  42:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\PADMANABAN\hb\src\components\Balloons.tsx:42:5
+  40 |   useEffect(() => {
+  41 |     const colors = ['#b19cd9', '#f4c2c2', '#e6e6fa', '#ffccf9'];
+> 42 |     setBalloons(Array.from({ length: 15 }).map((_, i) => ({
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  43 |       id: i,
+  44 |       delay: (i * 1.3) % 20,
+  45 |       color: colors[i % colors.length],  react-hooks/set-state-in-effect
+
+C:\Users\PADMANABAN\hb\src\components\CakeMaker.tsx
+   5:39  warning  'LucideCake' is defined but never used           @typescript-eslint/no-unused-vars
+   5:51  warning  'LucidePartyPopper' is defined but never used    @typescript-eslint/no-unused-vars
+  25:10  warning  'isBaked' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  25:19  warning  'setIsBaked' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\components\ClientLayout.tsx
+  24:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\PADMANABAN\hb\src\components\ClientLayout.tsx:24:5
+  22 |
+  23 |   useEffect(() => {
+> 24 |     setIsMounted(true);
+     |     ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  25 |     const handleMouseMove = (e: MouseEvent) => {
+  26 |       setMousePos({ x: e.clientX, y: e.clientY });
+  27 |     };  react-hooks/set-state-in-effect
+
+C:\Users\PADMANABAN\hb\src\components\MusicPlayer.tsx
+   5:10  warning  'LucideVolume2' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   5:25  warning  'LucideVolumeX' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+  25:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\PADMANABAN\hb\src\components\MusicPlayer.tsx:25:7
+  23 |   useEffect(() => {
+  24 |     if (autoPlayTrigger) {
+> 25 |       setIsPlaying(true);
+     |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  26 |       if (audioRef.current) {
+  27 |         audioRef.current.play().catch(e => console.log("Auto-play failed:", e));
+  28 |       }  react-hooks/set-state-in-effect
+  39:6   warning  React Hook useEffect has a missing dependency: 'isPlaying'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          react-hooks/exhaustive-deps
+
+C:\Users\PADMANABAN\hb\src\components\PasscodeLock.tsx
+   12:3   warning  'LucideAlertCircle' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   43:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\PADMANABAN\hb\src\components\PasscodeLock.tsx:43:9
+  41 |     if (passcode.length === 4) {
+  42 |       if (passcode === CORRECT_PASSCODE) {
+> 43 |         setShowGiftAccept(true);
+     |         ^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  44 |       } else {
+  45 |         const timer = setTimeout(() => {
+  46 |           setWrongCount(prev => prev + 1);                                                                                                                                                                                                                                                                                                                                                                          react-hooks/set-state-in-effect
+  169:18  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\PADMANABAN\hb\src\components\PasscodeLock.tsx:169:18
+  167 |           >
+  168 |             <div className="max-w-sm w-full bg-white rounded-[3.5rem] p-10 text-center space-y-8 shadow-[0_0_50px_rgba(255,77,109,0.3)] border-4 border-white">
+> 169 |                 <WrongReactionDisplay count={wrongCount} />
+      |                  ^^^^^^^^^^^^^^^^^^^^ This component is created during render
+  170 |                 <button 
+  171 |                     onClick={() => setError(null)}
+  172 |                     className="w-full py-5 bg-gray-900 text-white rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl hover:scale-105 transition-transform active:scale-95"
+
+C:\Users\PADMANABAN\hb\src\components\PasscodeLock.tsx:80:32
+   78 |   };
+   79 |
+>  80 |   const WrongReactionDisplay = ({ count }: { count: number }) => {
+      |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  81 |     const reaction = getReaction(count);
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  82 |
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  96 |     );
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  97 |   };
+      | ^^^^ The component is created during render here
+   98 |
+   99 |   if (showGiftAccept) {
+  100 |     return (  react-hooks/static-components
+
+C:\Users\PADMANABAN\hb\src\components\QuestionBox.tsx
+  5:51  warning  'LucideGhost' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 22 problems (8 errors, 14 warnings)
+

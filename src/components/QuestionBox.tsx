@@ -149,26 +149,37 @@ const QuestionBox = () => {
           >
             {/* Internal Particles */}
             <div className="absolute inset-0 pointer-events-none">
-              {[...Array(8)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  animate={{
-                    y: [0, -40, 0],
-                    x: [0, (i % 2 === 0 ? 15 : -15), 0],
-                    opacity: [0.1, 0.3, 0.1]
-                  }}
-                  transition={{
-                    duration: 3 + i,
-                    repeat: Infinity,
-                    delay: i * 0.5
-                  }}
-                  className="absolute w-1 h-1 bg-accent-primary rounded-full blur-[1px]"
-                  style={{
-                    top: `${Math.random() * 100}%`,
-                    left: `${Math.random() * 100}%`
-                  }}
-                />
-              ))}
+              {(() => {
+                // Pre-generating random values to avoid Math.random() in render
+                const particles = Array.from({ length: 8 }, (_, i) => ({
+                  top: `${(i * 13) % 100}%`,
+                  left: `${(i * 27) % 100}%`,
+                  duration: 3 + (i % 5),
+                  delay: i * 0.5,
+                  xOffset: (i % 2 === 0 ? 15 : -15)
+                }));
+                
+                return particles.map((p, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{
+                      y: [0, -40, 0],
+                      x: [0, p.xOffset, 0],
+                      opacity: [0.1, 0.3, 0.1]
+                    }}
+                    transition={{
+                      duration: p.duration,
+                      repeat: Infinity,
+                      delay: p.delay
+                    }}
+                    className="absolute w-1 h-1 bg-accent-primary rounded-full blur-[1px]"
+                    style={{
+                      top: p.top,
+                      left: p.left
+                    }}
+                  />
+                ));
+              })()}
             </div>
 
             {/* Step Indicator */}

@@ -29,7 +29,9 @@ export default function Home() {
   // Handle locking state locally
   useEffect(() => {
     const unlocked = localStorage.getItem('birthday_unlocked');
-    if (unlocked === 'true') setIsUnlocked(true);
+    if (unlocked === 'true') {
+      setTimeout(() => setIsUnlocked(true), 0);
+    }
   }, []);
 
   const handleUnlock = () => {
@@ -131,8 +133,8 @@ export default function Home() {
                       <div className="flex-1 space-y-12 text-center lg:text-left">
                         <span className="text-[10px] tracking-[0.8em] uppercase text-accent-tertiary block font-bold">The Reveal</span>
                         <h2 className="text-6xl md:text-[8rem] font-serif italic text-foreground leading-[0.9] tracking-tighter">
-                          "The world feels <br />
-                          <span className="text-accent-gradient not-italic">better."</span>
+                          &quot;The world feels <br />
+                          <span className="text-accent-gradient not-italic">better.&quot;</span>
                         </h2>
                         <p className="text-2xl md:text-3xl text-foreground/40 font-light leading-relaxed max-w-xl italic">
                           &quot;I hope that cake was as sweet as your smile. Wishing you the happiest of days.&quot;
@@ -207,7 +209,7 @@ export default function Home() {
                    <span className="text-[10px] uppercase tracking-[0.5em] text-accent-tertiary mb-6 font-bold">Your Mood</span>
                   <h2 className="text-5xl md:text-7xl font-serif mb-8 tracking-tighter leading-none">How are you <br />feeling?</h2>
                   <p className="text-foreground/40 text-xl font-light italic mb-12 max-w-md">
-                    Let's see if you're having a good day today.
+                    Let&apos;s see if you&apos;re having a good day today.
                   </p>
                 </div>
                 <div className="lg:col-span-7">

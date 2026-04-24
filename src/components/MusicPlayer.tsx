@@ -22,7 +22,7 @@ const MusicPlayer = ({ autoPlayTrigger }: { autoPlayTrigger?: boolean }) => {
 
   useEffect(() => {
     if (autoPlayTrigger) {
-      setIsPlaying(true);
+      setTimeout(() => setIsPlaying(true), 0);
       if (audioRef.current) {
         audioRef.current.play().catch(e => console.log("Auto-play failed:", e));
       }

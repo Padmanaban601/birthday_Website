@@ -101,7 +101,7 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
                     key={i}
                     animate={{ backgroundColor: selectedFlavor.secondary }}
                     className="w-4 h-10 md:w-6 md:h-14 rounded-full shadow-xl"
-                    style={{ marginBottom: `-${15 + Math.random() * 15}px` }}
+                    style={{ marginBottom: `-${15 + ((i * 7) % 15)}px` }}
                   />
                 ))}
                 {/* Frosting Shine */}
@@ -117,8 +117,8 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
                     animate={{ scale: 1, opacity: 1, y: 0, rotate: i * 35 }}
                     className="absolute text-4xl drop-shadow-2xl"
                     style={{ 
-                      top: `${Math.random() * 40}%`, 
-                      left: `${Math.random() * 80}%`,
+                      top: `${(i * 13) % 40}%`, 
+                      left: `${(i * 17) % 80}%`,
                     }}
                   >
                     {toppings.find(it => it.name === t)?.icon}
@@ -269,28 +269,36 @@ export default function CakeMaker({ onComplete }: { onComplete: () => void }) {
       {/* Confetti - Positioned outside the main flex flow */}
       {candlesLit && (
         <div className="absolute inset-0 pointer-events-none z-50">
-          {[...Array(40)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ y: 800, opacity: 0 }}
-              animate={{ 
-                y: -1200, 
-                opacity: [0, 1, 0], 
-                x: (Math.random() - 0.5) * 800,
-                rotate: 720 * Math.random(),
-                scale: [0.5, 1.2, 0.5]
-              }}
-              transition={{ 
-                duration: 3 + Math.random() * 3, 
-                repeat: Infinity, 
-                delay: Math.random() * 2,
-                ease: "easeOut"
-              }}
-              className="absolute bottom-0 left-1/2"
-            >
-              <LucideSparkles className="w-5 h-5 text-accent-tertiary shadow-[0_0_20px_rgba(255,175,189,0.5)]" />
-            </motion.div>
-          ))}
+          {(() => {
+            const sparkles = Array.from({ length: 40 }, (_, i) => ({
+              x: (i % 10 - 5) * 80 + (i % 3 * 20),
+              rotate: i * 18,
+              duration: 3 + (i % 3),
+              delay: (i * 0.05) % 2
+            }));
+            return sparkles.map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ y: 800, opacity: 0 }}
+                animate={{ 
+                  y: -1200, 
+                  opacity: [0, 1, 0], 
+                  x: s.x,
+                  rotate: s.rotate,
+                  scale: [0.5, 1.2, 0.5]
+                }}
+                transition={{ 
+                  duration: s.duration, 
+                  repeat: Infinity, 
+                  delay: s.delay,
+                  ease: "easeOut"
+                }}
+                className="absolute bottom-0 left-1/2"
+              >
+                <LucideSparkles className="w-5 h-5 text-accent-tertiary shadow-[0_0_20px_rgba(255,175,189,0.5)]" />
+              </motion.div>
+            ));
+          })()}
         </div>
       )}
     </div>

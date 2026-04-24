@@ -1,0 +1,399 @@
+﻿
+> hb@0.1.0 lint
+> eslint
+
+
+C:\Users\PADMANABAN\hb\.vercel\output\functions\_global-error.rsc.func\___next_launcher.cjs
+  11:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  46:18  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\PADMANABAN\hb\src\app\final\page.tsx
+   4:8   warning  'Section' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  82:23  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\app\final\page.tsx:82:23
+  80 |                   opacity: [0, 1, 0], 
+  81 |                   y: -800,
+> 82 |                   x: (Math.random() - 0.5) * 600
+     |                       ^^^^^^^^^^^^^ Cannot call impure function
+  83 |                 }}
+  84 |                 exit={{ opacity: 0 }}
+  85 |                 transition={{                                                                                                                        react-hooks/purity
+  86:33  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\app\final\page.tsx:86:33
+  84 |                 exit={{ opacity: 0 }}
+  85 |                 transition={{ 
+> 86 |                   duration: 5 + Math.random() * 5, 
+     |                                 ^^^^^^^^^^^^^ Cannot call impure function
+  87 |                   repeat: Infinity,
+  88 |                   delay: Math.random() * 3
+  89 |                 }}                                                                                             react-hooks/purity
+  88:26  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\app\final\page.tsx:88:26
+  86 |                   duration: 5 + Math.random() * 5, 
+  87 |                   repeat: Infinity,
+> 88 |                   delay: Math.random() * 3
+     |                          ^^^^^^^^^^^^^ Cannot call impure function
+  89 |                 }}
+  90 |                 className={`absolute left-1/2 bottom-0 w-1 h-1 rounded-full blur-[2px] ${i % 2 === 0 ? 'bg-accent-primary' : 'bg-accent-secondary'}`}
+  91 |               />  react-hooks/purity
+
+C:\Users\PADMANABAN\hb\src\app\moments\page.tsx
+  5:34  warning  'LucideStar' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\app\page.tsx
+   32:30  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\PADMANABAN\hb\src\app\page.tsx:32:30
+  30 |   useEffect(() => {
+  31 |     const unlocked = localStorage.getItem('birthday_unlocked');
+> 32 |     if (unlocked === 'true') setIsUnlocked(true);
+     |                              ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  33 |   }, []);
+  34 |
+  35 |   const handleUnlock = () => {  react-hooks/set-state-in-effect
+  134:27  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 react/no-unescaped-entities
+  135:84  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 react/no-unescaped-entities
+  210:24  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 react/no-unescaped-entities
+  210:37  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 react/no-unescaped-entities
+
+C:\Users\PADMANABAN\hb\src\app\thoughts\page.tsx
+  4:29  warning  'LucideSparkles' is defined but never used  @typescript-eslint/no-unused-vars
+  4:45  warning  'LucideHeart' is defined but never used     @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\app\wishes\page.tsx
+   4:8   warning  'Section' is defined but never used                              @typescript-eslint/no-unused-vars
+  54:13  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  54:85  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  77:17  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  77:32  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  94:62  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  94:78  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\PADMANABAN\hb\src\components\Balloons.tsx
+  16:24  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\Balloons.tsx:16:24
+  14 |       }}
+  15 |       transition={{ 
+> 16 |         duration: 15 + Math.random() * 10,
+     |                        ^^^^^^^^^^^^^ Cannot call impure function
+  17 |         delay: delay,
+  18 |         repeat: Infinity,
+  19 |         ease: "linear"                                                                                                                                                                                                                                                                                                                                      react-hooks/purity
+  48:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\PADMANABAN\hb\src\components\Balloons.tsx:48:5
+  46 |       left: `${Math.random() * 100}%`
+  47 |     }));
+> 48 |     setBalloons(newBalloons);
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  49 |   }, []);
+  50 |
+  51 |   return (  react-hooks/set-state-in-effect
+
+C:\Users\PADMANABAN\hb\src\components\CakeMaker.tsx
+    5:39  warning  'LucideCake' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+    5:51  warning  'LucidePartyPopper' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   25:10  warning  'isBaked' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   25:19  warning  'setIsBaked' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  104:53  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\CakeMaker.tsx:104:53
+  102 |                     animate={{ backgroundColor: selectedFlavor.secondary }}
+  103 |                     className="w-4 h-10 md:w-6 md:h-14 rounded-full shadow-xl"
+> 104 |                     style={{ marginBottom: `-${15 + Math.random() * 15}px` }}
+      |                                                     ^^^^^^^^^^^^^ Cannot call impure function
+  105 |                   />
+  106 |                 ))}
+  107 |                 {/* Frosting Shine */}  react-hooks/purity
+  120:31  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\CakeMaker.tsx:120:31
+  118 |                     className="absolute text-4xl drop-shadow-2xl"
+  119 |                     style={{ 
+> 120 |                       top: `${Math.random() * 40}%`, 
+      |                               ^^^^^^^^^^^^^ Cannot call impure function
+  121 |                       left: `${Math.random() * 80}%`,
+  122 |                     }}
+  123 |                   >                                                                                          react-hooks/purity
+  121:32  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\CakeMaker.tsx:121:32
+  119 |                     style={{ 
+  120 |                       top: `${Math.random() * 40}%`, 
+> 121 |                       left: `${Math.random() * 80}%`,
+      |                                ^^^^^^^^^^^^^ Cannot call impure function
+  122 |                     }}
+  123 |                   >
+  124 |                     {toppings.find(it => it.name === t)?.icon}                                                                                            react-hooks/purity
+  279:21  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\CakeMaker.tsx:279:21
+  277 |                 y: -1200, 
+  278 |                 opacity: [0, 1, 0], 
+> 279 |                 x: (Math.random() - 0.5) * 800,
+      |                     ^^^^^^^^^^^^^ Cannot call impure function
+  280 |                 rotate: 720 * Math.random(),
+  281 |                 scale: [0.5, 1.2, 0.5]
+  282 |               }}                                                                                                                                      react-hooks/purity
+  280:31  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\CakeMaker.tsx:280:31
+  278 |                 opacity: [0, 1, 0], 
+  279 |                 x: (Math.random() - 0.5) * 800,
+> 280 |                 rotate: 720 * Math.random(),
+      |                               ^^^^^^^^^^^^^ Cannot call impure function
+  281 |                 scale: [0.5, 1.2, 0.5]
+  282 |               }}
+  283 |               transition={{                                                                                                                           react-hooks/purity
+  284:31  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\CakeMaker.tsx:284:31
+  282 |               }}
+  283 |               transition={{ 
+> 284 |                 duration: 3 + Math.random() * 3, 
+      |                               ^^^^^^^^^^^^^ Cannot call impure function
+  285 |                 repeat: Infinity, 
+  286 |                 delay: Math.random() * 2,
+  287 |                 ease: "easeOut"                                                                                                                                    react-hooks/purity
+  286:24  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\CakeMaker.tsx:286:24
+  284 |                 duration: 3 + Math.random() * 3, 
+  285 |                 repeat: Infinity, 
+> 286 |                 delay: Math.random() * 2,
+      |                        ^^^^^^^^^^^^^ Cannot call impure function
+  287 |                 ease: "easeOut"
+  288 |               }}
+  289 |               className="absolute bottom-0 left-1/2"                                                                                                                   react-hooks/purity
+
+C:\Users\PADMANABAN\hb\src\components\ClientLayout.tsx
+   24:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\PADMANABAN\hb\src\components\ClientLayout.tsx:24:5
+  22 |
+  23 |   useEffect(() => {
+> 24 |     setIsMounted(true);
+     |     ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  25 |     const handleMouseMove = (e: MouseEvent) => {
+  26 |       setMousePos({ x: e.clientX, y: e.clientY });
+  27 |     };  react-hooks/set-state-in-effect
+   58:19  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react/no-unescaped-entities
+   59:97  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react/no-unescaped-entities
+  114:23  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\ClientLayout.tsx:114:23
+  112 |             className={`absolute rounded-full opacity-[0.4] blur-[1px] animate-pulse`}
+  113 |             style={{
+> 114 |               top: `${Math.random() * 100}%`,
+      |                       ^^^^^^^^^^^^^ Cannot call impure function
+  115 |               left: `${Math.random() * 100}%`,
+  116 |               width: `${Math.random() * 3}px`,
+  117 |               height: `${Math.random() * 3}px`,                                                                                                                                                                                                                             react-hooks/purity
+  115:24  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\ClientLayout.tsx:115:24
+  113 |             style={{
+  114 |               top: `${Math.random() * 100}%`,
+> 115 |               left: `${Math.random() * 100}%`,
+      |                        ^^^^^^^^^^^^^ Cannot call impure function
+  116 |               width: `${Math.random() * 3}px`,
+  117 |               height: `${Math.random() * 3}px`,
+  118 |               backgroundColor: i % 2 === 0 ? '#ffd700' : '#f8c8dc',                                                                                                                                                                                                                                               react-hooks/purity
+  116:25  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\ClientLayout.tsx:116:25
+  114 |               top: `${Math.random() * 100}%`,
+  115 |               left: `${Math.random() * 100}%`,
+> 116 |               width: `${Math.random() * 3}px`,
+      |                         ^^^^^^^^^^^^^ Cannot call impure function
+  117 |               height: `${Math.random() * 3}px`,
+  118 |               backgroundColor: i % 2 === 0 ? '#ffd700' : '#f8c8dc',
+  119 |               animationDelay: `${Math.random() * 5}s`,                                                                                                                                                                                                            react-hooks/purity
+  117:26  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\ClientLayout.tsx:117:26
+  115 |               left: `${Math.random() * 100}%`,
+  116 |               width: `${Math.random() * 3}px`,
+> 117 |               height: `${Math.random() * 3}px`,
+      |                          ^^^^^^^^^^^^^ Cannot call impure function
+  118 |               backgroundColor: i % 2 === 0 ? '#ffd700' : '#f8c8dc',
+  119 |               animationDelay: `${Math.random() * 5}s`,
+  120 |               animationDuration: `${2 + Math.random() * 3}s`                                                                                                                                                                                            react-hooks/purity
+  119:34  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\ClientLayout.tsx:119:34
+  117 |               height: `${Math.random() * 3}px`,
+  118 |               backgroundColor: i % 2 === 0 ? '#ffd700' : '#f8c8dc',
+> 119 |               animationDelay: `${Math.random() * 5}s`,
+      |                                  ^^^^^^^^^^^^^ Cannot call impure function
+  120 |               animationDuration: `${2 + Math.random() * 3}s`
+  121 |             }}
+  122 |           />                                                                                                                                                                                                                                                      react-hooks/purity
+  120:41  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\ClientLayout.tsx:120:41
+  118 |               backgroundColor: i % 2 === 0 ? '#ffd700' : '#f8c8dc',
+  119 |               animationDelay: `${Math.random() * 5}s`,
+> 120 |               animationDuration: `${2 + Math.random() * 3}s`
+      |                                         ^^^^^^^^^^^^^ Cannot call impure function
+  121 |             }}
+  122 |           />
+  123 |         ))}                                                                                                                                                                                                                                                                                   react-hooks/purity
+
+C:\Users\PADMANABAN\hb\src\components\MusicPlayer.tsx
+   5:10  warning  'LucideVolume2' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   5:25  warning  'LucideVolumeX' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+  25:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\PADMANABAN\hb\src\components\MusicPlayer.tsx:25:7
+  23 |   useEffect(() => {
+  24 |     if (autoPlayTrigger) {
+> 25 |       setIsPlaying(true);
+     |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  26 |       if (audioRef.current) {
+  27 |         audioRef.current.play().catch(e => console.log("Auto-play failed:", e));
+  28 |       }  react-hooks/set-state-in-effect
+  39:6   warning  React Hook useEffect has a missing dependency: 'isPlaying'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          react-hooks/exhaustive-deps
+
+C:\Users\PADMANABAN\hb\src\components\PasscodeLock.tsx
+   12:3   warning  'LucideAlertCircle' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   43:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\PADMANABAN\hb\src\components\PasscodeLock.tsx:43:9
+  41 |     if (passcode.length === 4) {
+  42 |       if (passcode === CORRECT_PASSCODE) {
+> 43 |         setShowGiftAccept(true);
+     |         ^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  44 |       } else {
+  45 |         const timer = setTimeout(() => {
+  46 |           setWrongCount(prev => prev + 1);                                                                                                                                                                                                     react-hooks/set-state-in-effect
+  122:21  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+  122:73  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+  165:18  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\PADMANABAN\hb\src\components\PasscodeLock.tsx:165:18
+  163 |           >
+  164 |             <div className="max-w-sm w-full bg-white rounded-[3.5rem] p-10 text-center space-y-8 shadow-[0_0_50px_rgba(255,77,109,0.3)] border-4 border-white">
+> 165 |                 <WrongReaction />
+      |                  ^^^^^^^^^^^^^ This component is created during render
+  166 |                 <button 
+  167 |                     onClick={() => setError(null)}
+  168 |                     className="w-full py-5 bg-gray-900 text-white rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl hover:scale-105 transition-transform active:scale-95"
+
+C:\Users\PADMANABAN\hb\src\components\PasscodeLock.tsx:55:25
+  53 |   }, [passcode]);
+  54 |
+> 55 |   const WrongReaction = () => {
+     |                         ^^^^^^^
+> 56 |     const reactions = [
+     | ^^^^^^^^^^^^^^^^^^^^^^^
+> 57 |       { 
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^
+> 92 |     );
+     | ^^^^^^^^^^^^^^^^^^^^^^^
+> 93 |   };
+     | ^^^^ The component is created during render here
+  94 |
+  95 |   if (showGiftAccept) {
+  96 |     return (  react-hooks/static-components
+
+C:\Users\PADMANABAN\hb\src\components\QuestionBox.tsx
+    5:51  warning  'LucideGhost' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  167:29  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\QuestionBox.tsx:167:29
+  165 |                   className="absolute w-1 h-1 bg-accent-primary rounded-full blur-[1px]"
+  166 |                   style={{
+> 167 |                     top: `${Math.random() * 100}%`,
+      |                             ^^^^^^^^^^^^^ Cannot call impure function
+  168 |                     left: `${Math.random() * 100}%`
+  169 |                   }}
+  170 |                 />  react-hooks/purity
+  168:30  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\PADMANABAN\hb\src\components\QuestionBox.tsx:168:30
+  166 |                   style={{
+  167 |                     top: `${Math.random() * 100}%`,
+> 168 |                     left: `${Math.random() * 100}%`
+      |                              ^^^^^^^^^^^^^ Cannot call impure function
+  169 |                   }}
+  170 |                 />
+  171 |               ))}                                                                        react-hooks/purity
+
+Γ£û 55 problems (41 errors, 14 warnings)
+

@@ -1,0 +1,47 @@
+﻿
+> hb@0.1.0 lint
+> eslint
+
+
+C:\Users\PADMANABAN\hb\.vercel\output\functions\_global-error.rsc.func\___next_launcher.cjs
+  11:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  46:18  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\PADMANABAN\hb\src\app\final\page.tsx
+  4:8  warning  'Section' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\app\moments\page.tsx
+  5:34  warning  'LucideStar' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\app\page.tsx
+  136:27  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  137:84  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  212:24  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  212:37  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\PADMANABAN\hb\src\app\thoughts\page.tsx
+  4:29  warning  'LucideSparkles' is defined but never used  @typescript-eslint/no-unused-vars
+  4:45  warning  'LucideHeart' is defined but never used     @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\app\wishes\page.tsx
+  4:8  warning  'Section' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\components\CakeMaker.tsx
+   5:39  warning  'LucideCake' is defined but never used           @typescript-eslint/no-unused-vars
+   5:51  warning  'LucidePartyPopper' is defined but never used    @typescript-eslint/no-unused-vars
+  25:10  warning  'isBaked' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  25:19  warning  'setIsBaked' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\components\MusicPlayer.tsx
+   5:10  warning  'LucideVolume2' is defined but never used                                                                     @typescript-eslint/no-unused-vars
+   5:25  warning  'LucideVolumeX' is defined but never used                                                                     @typescript-eslint/no-unused-vars
+  39:6   warning  React Hook useEffect has a missing dependency: 'isPlaying'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\PADMANABAN\hb\src\components\PasscodeLock.tsx
+  12:3  warning  'LucideAlertCircle' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\PADMANABAN\hb\src\components\QuestionBox.tsx
+  5:51  warning  'LucideGhost' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 20 problems (6 errors, 14 warnings)
+
