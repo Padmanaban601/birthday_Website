@@ -37,8 +37,8 @@ const Scanner = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(177,156,217,0.05),_transparent_70%)]" />
       
       <div className="mb-10 text-center relative z-10">
-        <h3 className="text-3xl font-playfair mb-3 tracking-tight">Soul Scanner</h3>
-        <p className="text-sm text-foreground/50 font-light max-w-[200px] mx-auto">Place your intent here to reveal a hidden cosmic truth</p>
+        <h3 className="text-3xl font-playfair mb-3 tracking-tight text-gray-900">Joy Radar</h3>
+        <p className="text-sm text-foreground/50 font-light max-w-[200px] mx-auto italic">Hold to synchronize with the birthday energy</p>
       </div>
 
       <div className="relative w-56 h-72 border border-white/5 bg-white/[0.02] rounded-[2.5rem] mb-10 flex items-center justify-center overflow-hidden">
@@ -66,7 +66,7 @@ const Scanner = () => {
                 <LucideHeart className="w-20 h-20 mb-6 fill-primary-lavender/20 animate-pulse" />
                 <LucideCheckCircle className="absolute -bottom-2 -right-2 w-8 h-8 text-white bg-primary-lavender rounded-full border-4 border-background" />
               </div>
-              <div className="text-2xl font-playfair italic tracking-wide text-gradient">100% Pure Soul</div>
+              <div className="text-2xl font-playfair italic tracking-wide text-gradient">100% Pure Happiness</div>
             </motion.div>
           ) : (
             <>
@@ -113,7 +113,7 @@ const Scanner = () => {
             className="text-center"
           >
             <p className="text-foreground/80 italic font-playfair text-lg mb-6 leading-relaxed">
-              &quot;The stars confirm: You possess a light that makes the world remarkably brighter.&quot;
+              &quot;The radar confirms: You are emitting an incredible amount of joy today. Happy Birthday!&quot;
             </p>
             <button 
               onClick={() => { setScanComplete(false); setProgress(0); }}
