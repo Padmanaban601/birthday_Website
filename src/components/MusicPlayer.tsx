@@ -15,12 +15,12 @@ const playlist = [
   {
     title: "Baar Baar Din Yeh Aaye",
     artist: "Hindi Birthday Classic",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" // Placeholder
+    url: "https://archive.org/download/baar-baar-din-ye-aaye/Baar%20Baar%20Din%20Ye%20Aaye.mp3"
   },
   {
     title: "Tamil Birthday Wish",
     artist: "Traditional Tamil",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" // Placeholder
+    url: "https://ia800701.us.archive.org/26/items/tamil-birthday-song/Tamil%20Birthday%20Song.mp3"
   }
 ];
 
