@@ -207,7 +207,7 @@ const QuestionBox = () => {
               <div className="relative group/icon">
                  <div className="absolute inset-0 bg-accent-primary/20 blur-2xl rounded-full opacity-0 group-hover/icon:opacity-100 transition-opacity duration-700" />
                  <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl md:rounded-[2rem] bg-white/5 flex items-center justify-center border border-white/10 shadow-[inset_0_0_20px_rgba(255,255,255,0.02)] backdrop-blur-sm relative z-10">
-                    {React.cloneElement(currentQuestion.icon as React.ReactElement, { className: "w-8 h-8 md:w-12 md:h-12" })}
+                    {React.cloneElement(currentQuestion.icon as React.ReactElement<{ className?: string }>, { className: "w-8 h-8 md:w-12 md:h-12" })}
                  </div>
               </div>
             </motion.div>
