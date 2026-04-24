@@ -102,11 +102,11 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         <div className="absolute top-[-10%] right-[-10%] w-[700px] h-[700px] bg-accent-secondary/10 blur-[180px] rounded-full opacity-40" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[700px] h-[700px] bg-accent-tertiary/10 blur-[180px] rounded-full opacity-30" />
         
-        {/* Stellar Field */}
+        {/* Light Particles */}
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay" />
         
         {isMounted && (() => {
-          const stars = Array.from({ length: 40 }, (_, i) => ({
+          const particles = Array.from({ length: 40 }, (_, i) => ({
             top: `${(i * 17) % 100}%`,
             left: `${(i * 23) % 100}%`,
             width: `${1 + (i % 3)}px`,
@@ -114,18 +114,18 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             delay: (i * 0.1) % 5,
             duration: 2 + (i % 3)
           }));
-          return stars.map((s, i) => (
+          return particles.map((p, i) => (
             <div 
               key={i}
               className={`absolute rounded-full opacity-[0.4] blur-[1px] animate-pulse`}
               style={{
-                top: s.top,
-                left: s.left,
-                width: s.width,
-                height: s.height,
+                top: p.top,
+                left: p.left,
+                width: p.width,
+                height: p.height,
                 backgroundColor: i % 2 === 0 ? '#ffd700' : '#f8c8dc',
-                animationDelay: `${s.delay}s`,
-                animationDuration: `${s.duration}s`
+                animationDelay: `${p.delay}s`,
+                animationDuration: `${p.duration}s`
               }}
             />
           ));

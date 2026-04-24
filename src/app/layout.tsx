@@ -15,8 +15,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "A Quiet Wish | For Someone Special",
-  description: "A respectful birthday wish with no expectations, only happiness.",
+  title: "For You | A Special Birthday Gift",
+  description: "A premium, private birthday experience created just for you.",
 };
 
 export default function RootLayout({
