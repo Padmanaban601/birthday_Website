@@ -8,9 +8,19 @@ import { useAudio } from './AudioProvider';
 
 const playlist = [
   {
-    title: "Happy Birthday",
-    artist: "A Special Wish for You",
+    title: "Happy Birthday (English)",
+    artist: "Classic Wish",
     url: "https://archive.org/download/HappyBirthday_201311/Happy%20Birthday.mp3"
+  },
+  {
+    title: "Baar Baar Din Yeh Aaye",
+    artist: "Hindi Birthday Classic",
+    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" // Placeholder
+  },
+  {
+    title: "Tamil Birthday Wish",
+    artist: "Traditional Tamil",
+    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" // Placeholder
   }
 ];
 
